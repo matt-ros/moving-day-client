@@ -9,9 +9,9 @@ class UserHomepage extends React.Component {
       <>
         <Countdown moving_date={this.props.STORE.moving_date} />
 
-        <ListsPage history={this.props.history} lists={this.props.STORE.lists} />
+        <ListsPage lists={this.props.STORE.lists} />
         
-        <BoxesPage history={this.props.history} boxes={this.props.STORE.boxes} />
+        <BoxesPage boxes={this.props.STORE.boxes} />
       </>
     )
   }

@@ -9,6 +9,8 @@ import ExpandedBox from './ExpandedBox/ExpandedBox';
 import ListsPage from './ListsPage/ListsPage';
 import ExpandedList from './ExpandedList/ExpandedList';
 import STORE from './STORE';
+import BoxForm from './BoxForm/BoxForm';
+import ListForm from './ListForm/ListForm';
 
 class App extends React.Component {
   render() {
@@ -19,15 +21,13 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={LandingPage} />
             <Route path='/signup' component={SignupFormPage} />
-            <Route
-              path='/homepage'
-              render={routeProps => (
-                <UserHomepage history={routeProps.history} STORE={STORE} />
-              )}
-            />
+            <Route path='/homepage'>
+              <UserHomepage STORE={STORE} />
+            </Route>
             <Route exact path='/boxes'>
               <BoxesPage boxes={STORE.boxes} />
             </Route>
+            <Route path='/boxform' component={BoxForm} />
             <Route
               path='/boxes/:box_id'
               render={routeProps => (
@@ -37,6 +37,7 @@ class App extends React.Component {
             <Route exact path='/lists'>
               <ListsPage lists={STORE.lists} />
             </Route>
+            <Route path='/listform' component={ListForm} />
             <Route
               path='/lists/:list_id'
               render={routeProps => (

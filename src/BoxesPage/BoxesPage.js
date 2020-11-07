@@ -18,7 +18,7 @@ class BoxesPage extends React.Component {
             <Box key={box.id} box={box} />
           )}
         </ul>
-        <button type='button' onClick={e => this.props.history.push('/')}>New Box</button>
+        <button type='button' onClick={e => this.props.history.push('/boxform')}>New Box</button>
       </section>
     )
   }

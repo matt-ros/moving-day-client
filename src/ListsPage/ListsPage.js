@@ -16,7 +16,7 @@ class ListsPage extends React.Component {
             <List key={list.id} list={list} />
           )}
         </ul>
-        <button type='button'>New List</button>
+        <button type='button' onClick={e => this.props.history.push('/listform')}>New List</button>
       </section>
     )
   }
