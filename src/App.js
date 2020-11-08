@@ -16,7 +16,10 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Route path='/' component={Nav} />
+        <Switch>
+          <Route path='/homepage' />
+          <Route path='/' component={Nav} />
+        </Switch>
         <main className='App'>
           <Switch>
             <Route exact path='/' component={LandingPage} />

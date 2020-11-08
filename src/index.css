@@ -57,6 +57,28 @@ section:nth-child(even) {
   display: inline-block;
 }
 
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  height: 49vh;
+  width: 100%;
+}
+
+.links a {
+  /* flex: 1; */
+  width: 49%;
+}
+
+.links section {
+  min-height: 24vh;
+  max-height: 24vh;
+}
+
+.links a:nth-child(even) section {
+  background-color: #ddd;
+}
+
 @media all and (min-width: 400px) {
   nav p {
     font-size: 30px;

@@ -8,8 +8,10 @@ class Countdown extends React.Component {
     const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
 
     return (
-      <header>
-        <h2>Moving in {diffInDays} days!</h2>
+      <header className='countdown'>
+        <h3>Today is {today.toDateString()}</h3>
+        <h3>Moving Day is {movingDay.toDateString()}</h3>
+        <h3>Moving in {diffInDays} days!</h3>
       </header>
     )
   }

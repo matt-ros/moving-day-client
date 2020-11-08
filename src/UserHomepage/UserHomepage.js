@@ -1,6 +1,5 @@
 import React from 'react';
-import BoxesPage from '../BoxesPage/BoxesPage';
-import ListsPage from '../ListsPage/ListsPage';
+import { Link } from 'react-router-dom';
 import Countdown from '../Countdown/Countdown';
 
 class UserHomepage extends React.Component {
@@ -9,9 +8,39 @@ class UserHomepage extends React.Component {
       <>
         <Countdown moving_date={this.props.STORE.moving_date} />
 
-        <ListsPage lists={this.props.STORE.lists} />
-        
-        <BoxesPage boxes={this.props.STORE.boxes} />
+        <div className='links'>
+          <Link to={'/lists'}>
+            <section>
+              <h3>
+                Lists
+              </h3>
+            </section>
+          </Link>
+          
+          <Link to={'/boxes'}>
+            <section>
+              <h3>
+                Boxes
+              </h3>
+            </section>
+          </Link>
+
+          <Link to={'/contacts'}>
+            <section>
+              <h3>
+                  Contacts
+              </h3>
+            </section>
+          </Link>
+          
+          <Link to={'/notes'}>
+            <section>
+              <h3>
+                  Notes
+              </h3>
+            </section>
+          </Link>
+        </div>
       </>
     )
   }
