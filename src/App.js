@@ -31,6 +31,7 @@ class App extends React.Component {
             <Route
               path='/boxes/:box_id'
               render={routeProps => (
+                // eslint-disable-next-line
               <ExpandedBox history={routeProps.history} box={STORE.boxes.find(box => box.id == routeProps.match.params.box_id)} />
               )}
             />
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route
               path='/lists/:list_id'
               render={routeProps => (
+                // eslint-disable-next-line
               <ExpandedList history={routeProps.history} list={STORE.lists.find(list => list.id == routeProps.match.params.list_id)} />
               )}
             />

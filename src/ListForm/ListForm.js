@@ -18,7 +18,7 @@ class ListForm extends React.Component {
     return (
       <>
         <header role="banner">
-          <h1>Create To-Do List</h1>
+          <h1>Create/Edit To-Do List</h1>
         </header>
         <section>
           <form id='list_form' onSubmit={this.handleSubmitList}>
@@ -41,6 +41,7 @@ class ListForm extends React.Component {
             <li>as they are added</li>
             <li>with Add Item button</li>
           </ul>
+          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
         </section>
       </>
     )

@@ -23,7 +23,7 @@ class ExpandedBox extends React.Component {
             {inventory}
           </ul>
         }
-        <button type='button'>Edit</button>
+        <button type='button' onClick={e => this.props.history.push('/boxform')}>Edit</button>
         <button type='button'>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>
       </section>

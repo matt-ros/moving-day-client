@@ -22,7 +22,7 @@ class BoxForm extends React.Component {
     return (
       <>
         <header role="banner">
-          <h1>Create Box</h1>
+          <h1>Create/Edit Box</h1>
         </header>
         <section>
           <form id='box_form' onSubmit={this.handleSubmitBox}>
@@ -57,6 +57,7 @@ class BoxForm extends React.Component {
             <li>as they are added</li>
             <li>with Add Item button</li>
           </ul>
+          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
         </section>
       </>
     )

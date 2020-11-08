@@ -16,7 +16,7 @@ class ExpandedList extends React.Component {
         <ul>
           {items}
         </ul>
-        <button type='button'>Edit</button>
+        <button type='button' onClick={e => this.props.history.push('/listform')}>Edit</button>
         <button type='button'>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>
       </section>

@@ -13,7 +13,7 @@ class ListsPage extends React.Component {
         </h2>
         <ul>
           {this.props.lists.map(list =>
-            <List key={list.id} list={list} />
+            <List key={list.id} list={list} history={this.props.history} />
           )}
         </ul>
         <button type='button' onClick={e => this.props.history.push('/listform')}>New List</button>

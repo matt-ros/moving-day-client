@@ -10,7 +10,7 @@ class List extends React.Component {
             {this.props.list.name}
           </Link>
         </h3>
-        <button type='button'>Edit</button>
+        <button type='button' onClick={e => this.props.history.push('/listform')}>Edit</button>
         <button type='button'>Delete</button>
       </li>
     )

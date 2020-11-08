@@ -1,3 +1,5 @@
+@import '~@csstools/normalize.css';
+
 * {
   box-sizing: border-box;
 }
@@ -45,4 +47,52 @@ section:nth-child(even) {
   list-style-type: none;
   margin-left: 0;
   padding-left: 0;
+}
+
+.boxes label {
+  margin: auto 10px auto 2px;
+}
+
+.unit {
+  display: inline-block;
+}
+
+@media all and (min-width: 400px) {
+  nav p {
+    font-size: 30px;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+}
+
+@media all and (min-width: 800px) {
+  nav p {
+    font-size: 30px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .login-form {
+    display: flex;
+    justify-content: right;
+    height: 30px;
+  }
+
+  .login-form input {
+    margin: 4px
+  }
 }

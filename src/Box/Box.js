@@ -10,7 +10,7 @@ class Box extends React.Component {
             {this.props.box.name}
           </Link>
         </h3>
-        <button type='button'>Edit</button>
+        <button type='button' onClick={e => this.props.history.push('/boxform')}>Edit</button>
         <button type='button'>Delete</button>
       </li>
     )

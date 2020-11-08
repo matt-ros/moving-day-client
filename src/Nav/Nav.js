@@ -12,7 +12,7 @@ class Nav extends React.Component {
   render() {
     return (
       <nav>
-        <p>
+        <p className='unit'>
           <Link to='/boxes'>Boxes</Link> |
           {' '}
           <Link to='/lists'>To-Do Lists</Link> |
@@ -20,13 +20,13 @@ class Nav extends React.Component {
           <Link to='/homepage'>Home</Link>
         </p>
         <form className="login-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input type="text" name="username" id="username" />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <label htmlFor="username">Username</label>{' '}
+          <input type="text" name="username" id="username" /><br />
+          <label htmlFor="password">Password</label>{' '}
+          <input type="password" name="password" id="password" />{' '}
           <button type="submit">Login</button>
+          <button type='button' onClick={e => this.props.history.push('/')}>Logout</button>
         </form>
-        <button type='button' onClick={e => this.props.history.push('/')}>Logout</button>
       </nav>
     )
   }
