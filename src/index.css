@@ -49,7 +49,7 @@ section:nth-child(even) {
   padding-left: 0;
 }
 
-.boxes label {
+.boxes label, .contacts label {
   margin: auto 10px auto 2px;
 }
 

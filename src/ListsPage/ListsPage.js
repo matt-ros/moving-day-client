@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import List from '../List/List';
 
 class ListsPage extends React.Component {
@@ -7,9 +7,7 @@ class ListsPage extends React.Component {
     return (
       <section className='lists page'>
         <h2>
-          <Link to={'/lists'}>
-            To-Do Lists
-          </Link>
+          To-Do Lists
         </h2>
         <ul>
           {this.props.lists.map(list =>

@@ -11,6 +11,10 @@ import ExpandedList from './ExpandedList/ExpandedList';
 import STORE from './STORE';
 import BoxForm from './BoxForm/BoxForm';
 import ListForm from './ListForm/ListForm';
+import ContactForm from './ContactForm/ContactForm';
+import ContactsPage from './ContactsPage/ContactsPage';
+import ExpandedContact from './ExpandedContact/ExpandedContact';
+import NotesPage from './NotesPage/NotesPage';
 
 class App extends React.Component {
   render() {
@@ -25,7 +29,7 @@ class App extends React.Component {
             <Route exact path='/' component={LandingPage} />
             <Route path='/signup' component={SignupFormPage} />
             <Route path='/homepage'>
-              <UserHomepage STORE={STORE} />
+              <UserHomepage moving_date={STORE.moving_date} />
             </Route>
             <Route exact path='/boxes'>
               <BoxesPage boxes={STORE.boxes} />
@@ -35,7 +39,7 @@ class App extends React.Component {
               path='/boxes/:box_id'
               render={routeProps => (
                 // eslint-disable-next-line
-              <ExpandedBox history={routeProps.history} box={STORE.boxes.find(box => box.id == routeProps.match.params.box_id)} />
+                <ExpandedBox history={routeProps.history} box={STORE.boxes.find(box => box.id == routeProps.match.params.box_id)} />
               )}
             />
             <Route exact path='/lists'>
@@ -46,9 +50,23 @@ class App extends React.Component {
               path='/lists/:list_id'
               render={routeProps => (
                 // eslint-disable-next-line
-              <ExpandedList history={routeProps.history} list={STORE.lists.find(list => list.id == routeProps.match.params.list_id)} />
+                <ExpandedList history={routeProps.history} list={STORE.lists.find(list => list.id == routeProps.match.params.list_id)} />
               )}
             />
+            <Route exact path='/contacts'>
+              <ContactsPage contacts={STORE.contacts} />
+            </Route>
+            <Route path='/contactform' component={ContactForm} />
+            <Route
+              path='/contacts/:contact_id'
+              render={routeProps => (
+                // eslint-disable-next-line
+                <ExpandedContact history={routeProps.history} contact={STORE.contacts.find(contact => contact.id == routeProps.match.params.contact_id)} />
+              )}
+            />
+            <Route path='/notes'>
+              <NotesPage notes={STORE.notes} />
+            </Route>
           </Switch>
         </main>
       </>

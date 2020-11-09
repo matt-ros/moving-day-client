@@ -22,6 +22,12 @@ class LandingPage extends React.Component {
           <p>Never forget what you were supposed to be doing with to-do lists for the whole family</p>
         </section>
 
+        <section>
+          <h3>Organize your contacts</h3>
+          <p>[<em>Screenshot of Contacts section</em>]</p>
+          <p>Record all your move-related contacts so everything is in one place</p>
+        </section>
+
         <Link to={'/signup'}><h4>Sign Up Now!</h4></Link>
       </>
     )

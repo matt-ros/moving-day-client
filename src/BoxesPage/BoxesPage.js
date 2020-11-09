@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Box from '../Box/Box';
 
 class BoxesPage extends React.Component {
@@ -8,9 +8,7 @@ class BoxesPage extends React.Component {
       <section className='boxes page'>
         <header>
           <h2>
-            <Link to={'/boxes'}>
-              Boxes
-            </Link>
+            Boxes
           </h2>
         </header>
         <label htmlFor='filter'>Filter</label>{' '}

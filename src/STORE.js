@@ -51,6 +51,16 @@ const STORE = {
       ]
     }
   ],
+  contacts: [
+    {
+      id: 1,
+      name: 'Steve (Mover)',
+      phone: '123-456-7890',
+      email: 'steve@gmail.com',
+      notes: 'Coming Friday 12/4 9am'
+    }
+  ],
+  notes: 'This will just be free form text input.',
   moving_date: new Date('2020/12/31')
 }
 

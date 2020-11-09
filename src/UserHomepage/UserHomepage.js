@@ -6,7 +6,7 @@ class UserHomepage extends React.Component {
   render() {
     return (
       <>
-        <Countdown moving_date={this.props.STORE.moving_date} />
+        <Countdown moving_date={this.props.moving_date} />
 
         <div className='links'>
           <Link to={'/lists'}>
