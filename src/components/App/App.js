@@ -1,20 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Nav from './Nav/Nav';
-import LandingPage from './LandingPage/LandingPage';
-import SignupFormPage from './SignupFormPage/SignupFormPage';
-import UserHomepage from './UserHomepage/UserHomepage';
-import BoxesPage from './BoxesPage/BoxesPage';
-import ExpandedBox from './ExpandedBox/ExpandedBox';
-import ListsPage from './ListsPage/ListsPage';
-import ExpandedList from './ExpandedList/ExpandedList';
-import STORE from './STORE';
-import BoxForm from './BoxForm/BoxForm';
-import ListForm from './ListForm/ListForm';
-import ContactForm from './ContactForm/ContactForm';
-import ContactsPage from './ContactsPage/ContactsPage';
-import ExpandedContact from './ExpandedContact/ExpandedContact';
-import NotesPage from './NotesPage/NotesPage';
+import Nav from '../Nav/Nav';
+import LandingPage from '../LandingPage/LandingPage';
+import SignupFormPage from '../SignupFormPage/SignupFormPage';
+import UserHomepage from '../UserHomepage/UserHomepage';
+import BoxesPage from '../BoxesPage/BoxesPage';
+import ExpandedBox from '../ExpandedBox/ExpandedBox';
+import ListsPage from '../ListsPage/ListsPage';
+import ExpandedList from '../ExpandedList/ExpandedList';
+import STORE from '../../STORE';
+import BoxForm from '../BoxForm/BoxForm';
+import ListForm from '../ListForm/ListForm';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactsPage from '../ContactsPage/ContactsPage';
+import ExpandedContact from '../ExpandedContact/ExpandedContact';
+import NotesPage from '../NotesPage/NotesPage';
 
 class App extends React.Component {
   render() {
