@@ -3,7 +3,8 @@ import React from 'react';
 class Countdown extends React.Component {
   render() {
     const today = new Date(new Date().toDateString());
-    const movingDay = this.props.moving_date;
+    const movingDate = new Date(this.props.moving_date)
+    const movingDay = new Date(movingDate.getUTCFullYear(), movingDate.getUTCMonth(), movingDate.getUTCDate());
     const diffInMilliseconds = movingDay.getTime() - today.getTime();
     const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
 

@@ -1,19 +1,62 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TokenService from '../../services/token-service'
+import AuthApiService from '../../services/auth-api-service'
 
 class Nav extends React.Component {
-  handleClickLogin = e => {
-    e.preventDefault();
-    const { username, password } = e.target;
-    username.value = '';
-    password.value = '';
-    this.props.history.push('/homepage');
+  state = {
+    error: null
+  }
+
+  handleClickLogin = ev => {
+    ev.preventDefault();
+    this.setState({ error: null });
+    const { user_name, password } = ev.target;
+    
+    AuthApiService.postLogin({
+      user_name: user_name.value,
+      password: password.value
+    })
+      .then(res => {
+        user_name.value = '';
+        password.value = '';
+        TokenService.saveAuthToken(res.authToken);
+        this.props.onLogin();
+        this.props.history.push('/homepage');
+      })
+      .catch(res => {
+        this.setState({ error: res.error });
+      })
   }
 
   handleClickLogout = e => {
     e.preventDefault();
+    TokenService.clearAuthToken();
     this.props.history.push('/');
   }
+
+  renderLoginForm() {
+    const { error } = this.state
+    return (
+      <form className="login-form" onSubmit={this.handleClickLogin}>
+        {(error)
+          ? <div className='error'>{error}</div>
+          : null }
+        <label htmlFor="user_name">Username</label>{' '}
+        <input type="text" name="user_name" id="user_name" /><br />
+        <label htmlFor="password">Password</label>{' '}
+        <input type="password" name="password" id="password" />{' '}
+        <button type="submit">Login</button>
+      </form>
+    )
+  }
+
+  renderLogoutButton() {
+    return (
+      <button type='button' onClick={this.handleClickLogout}>Logout</button>
+    )
+  }
+
   render() {
     return (
       <nav>
@@ -28,14 +71,9 @@ class Nav extends React.Component {
           {' '}
           <Link to='/notes'>Notes</Link>
         </p>
-        <form className="login-form" onSubmit={this.handleClickLogin}>
-          <label htmlFor="username">Username</label>{' '}
-          <input type="text" name="username" id="username" /><br />
-          <label htmlFor="password">Password</label>{' '}
-          <input type="password" name="password" id="password" />{' '}
-          <button type="submit">Login</button>
-          <button type='button' onClick={this.handleClickLogout}>Logout</button>
-        </form>
+        {TokenService.hasAuthToken()
+          ? this.renderLogoutButton()
+          : this.renderLoginForm()}
       </nav>
     )
   }
