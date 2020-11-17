@@ -32,9 +32,16 @@ class App extends React.Component {
   onLogin = () => {
     UsersApiService.getUser()
       .then(user => {
-        console.log(user)
         this.setState({ user })
       })
+  }
+
+  updateUser = (updatedFields) => {
+    const updatedUser = {
+      ...this.state.user,
+      ...updatedFields
+    }
+    this.setState({ user: updatedUser })
   }
 
   componentDidMount() {
@@ -60,7 +67,7 @@ class App extends React.Component {
             <Route exact path='/' component={LandingPage} />
             <Route path='/signup' component={SignupFormPage} />
             <Route path='/homepage'>
-              <UserHomepage moving_date={this.state.user.moving_date} />
+              <UserHomepage updateUser={this.updateUser} moving_date={this.state.user.moving_date} />
             </Route>
             <Route exact path='/boxes'>
               <BoxesPage boxes={STORE.boxes} />
@@ -96,7 +103,7 @@ class App extends React.Component {
               )}
             />
             <Route path='/notes'>
-              <NotesPage notes={this.state.user.notes} />
+              <NotesPage updateUser={this.updateUser} notes={this.state.user.notes} />
             </Route>
           </Switch>
         </main>
