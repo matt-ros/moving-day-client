@@ -2,15 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TokenService from '../../services/token-service'
 import AuthApiService from '../../services/auth-api-service'
+import MovingdayContext from '../../context/MovingdayContext';
 
 class Nav extends React.Component {
-  state = {
-    error: null
-  }
+  static contextType = MovingdayContext
 
   handleClickLogin = ev => {
     ev.preventDefault();
-    this.setState({ error: null });
+    this.context.clearError()
     const { user_name, password } = ev.target;
     
     AuthApiService.postLogin({
@@ -21,11 +20,11 @@ class Nav extends React.Component {
         user_name.value = '';
         password.value = '';
         TokenService.saveAuthToken(res.authToken);
-        this.props.onLogin();
+        this.context.onLogin();
         this.props.history.push('/homepage');
       })
       .catch(res => {
-        this.setState({ error: res.error });
+        this.context.setError(res)
       })
   }
 
@@ -36,7 +35,7 @@ class Nav extends React.Component {
   }
 
   renderLoginForm() {
-    const { error } = this.state
+    const { error } = this.context
     return (
       <form className="login-form" onSubmit={this.handleClickLogin}>
         {(error)
@@ -57,19 +56,36 @@ class Nav extends React.Component {
     )
   }
 
+  renderLinks() {
+    return (
+      <>
+        <Link to='/homepage'>Home</Link> |
+        {' '}
+        <Link to='/lists'>To-Do Lists</Link> |
+        {' '}
+        <Link to='/boxes'>Boxes</Link> |
+        {' '}
+        <Link to='/contacts'>Contacts</Link> |
+        {' '}
+        <Link to='/notes'>Notes</Link>
+      </>
+    )
+  }
+
+  renderEmpty() {
+    return (
+      <>
+      </>
+    )
+  }
+
   render() {
     return (
       <nav>
         <p className='unit'>
-          <Link to='/homepage'>Home</Link> |
-          {' '}
-          <Link to='/lists'>To-Do Lists</Link> |
-          {' '}
-          <Link to='/boxes'>Boxes</Link> |
-          {' '}
-          <Link to='/contacts'>Contacts</Link> |
-          {' '}
-          <Link to='/notes'>Notes</Link>
+          {TokenService.hasAuthToken()
+            ? this.renderLinks()
+            : this.renderEmpty()}
         </p>
         {TokenService.hasAuthToken()
           ? this.renderLogoutButton()

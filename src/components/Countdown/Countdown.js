@@ -26,7 +26,7 @@ class Countdown extends React.Component {
         <h3>Moving in {diffInDays} days!</h3>
         <form onSubmit={this.handleUpdateNotes}>
           <label htmlFor='moving_date'>Change Moving Day</label>
-          <input type='date' name='moving_date' id='moving_date' defaultValue={formattedDate} />
+          {this.props.moving_date && <input type='date' name='moving_date' id='moving_date' defaultValue={formattedDate} />}
           <button type='submit'>Update</button>
         </form>
       </header>

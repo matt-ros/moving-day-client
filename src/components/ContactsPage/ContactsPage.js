@@ -1,8 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
 import Contact from '../Contact/Contact';
 
 class ContactsPage extends React.Component {
+  static contextType = MovingdayContext
+  
   render() {
     return (
       <section className='contacts page'>
@@ -31,7 +34,7 @@ class ContactsPage extends React.Component {
           <label htmlFor='contact_notes'>Notes</label>
         </div>
         <ul>
-          {this.props.contacts.map(contact =>
+          {this.context.contacts.map(contact =>
             <Contact key={contact.id} contact={contact} history={this.props.history} />
           )}
         </ul>

@@ -7,7 +7,7 @@ class List extends React.Component {
       <li>
         <h3>
           <Link to={`/lists/${this.props.list.id}`}>
-            {this.props.list.name}
+            {this.props.list.list_name}
           </Link>
         </h3>
         <button type='button' onClick={e => this.props.history.push('/listform')}>Edit</button>

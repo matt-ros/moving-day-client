@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
 import Countdown from '../Countdown/Countdown';
 
 class UserHomepage extends React.Component {
+  static contextType = MovingdayContext
   render() {
     return (
       <>
-        <Countdown updateUser={this.props.updateUser} moving_date={this.props.moving_date} />
+        <Countdown updateUser={this.context.updateUser} moving_date={this.context.user.moving_date} />
 
         <div className='links'>
           <Link to={'/lists'}>

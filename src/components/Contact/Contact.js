@@ -7,7 +7,7 @@ class Contact extends React.Component {
       <li>
         <h3>
           <Link to={`/contacts/${this.props.contact.id}`}>
-            {this.props.contact.name}
+            {this.props.contact.contact_name}
           </Link>
         </h3>
         <button type='button' onClick={e => this.props.history.push('/contactform')}>Edit</button>

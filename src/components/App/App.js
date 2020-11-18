@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import PublicOnlyRoute from '../Utils/PublicOnlyRoute';
+import PrivateRoute from '../Utils/PrivateRoute';
 import Nav from '../Nav/Nav';
 import LandingPage from '../LandingPage/LandingPage';
 import SignupFormPage from '../SignupFormPage/SignupFormPage';
@@ -29,13 +31,6 @@ class App extends React.Component {
     return { hasError: true }
   }
 
-  onLogin = () => {
-    UsersApiService.getUser()
-      .then(user => {
-        this.setState({ user })
-      })
-  }
-
   updateUser = (updatedFields) => {
     const updatedUser = {
       ...this.state.user,
@@ -44,67 +39,31 @@ class App extends React.Component {
     this.setState({ user: updatedUser })
   }
 
-  componentDidMount() {
-    if (TokenService.hasAuthToken()) {
-      this.onLogin()
-    }
-  }
-
   render() {
     return (
       <>
         <Switch>
           <Route path='/homepage' />
-          <Route
-            path='/'
-            render={routeProps => (
-              <Nav history={routeProps.history} onLogin={this.onLogin} />
-            )}
-          />
+          <Route path='/' component={Nav} />
         </Switch>
         <main className='App'>
           <Switch>
-            <Route exact path='/' component={LandingPage} />
-            <Route path='/signup' component={SignupFormPage} />
-            <Route path='/homepage'>
-              <UserHomepage updateUser={this.updateUser} moving_date={this.state.user.moving_date} />
-            </Route>
-            <Route exact path='/boxes'>
-              <BoxesPage boxes={STORE.boxes} />
-            </Route>
-            <Route path='/boxform' component={BoxForm} />
-            <Route
-              path='/boxes/:box_id'
-              render={routeProps => (
-                // eslint-disable-next-line
-                <ExpandedBox history={routeProps.history} box={STORE.boxes.find(box => box.id == routeProps.match.params.box_id)} />
-              )}
-            />
-            <Route exact path='/lists'>
-              <ListsPage lists={STORE.lists} />
-            </Route>
-            <Route path='/listform' component={ListForm} />
-            <Route
-              path='/lists/:list_id'
-              render={routeProps => (
-                // eslint-disable-next-line
-                <ExpandedList history={routeProps.history} list={STORE.lists.find(list => list.id == routeProps.match.params.list_id)} />
-              )}
-            />
-            <Route exact path='/contacts'>
-              <ContactsPage contacts={STORE.contacts} />
-            </Route>
-            <Route path='/contactform' component={ContactForm} />
-            <Route
-              path='/contacts/:contact_id'
-              render={routeProps => (
-                // eslint-disable-next-line
-                <ExpandedContact history={routeProps.history} contact={STORE.contacts.find(contact => contact.id == routeProps.match.params.contact_id)} />
-              )}
-            />
-            <Route path='/notes'>
-              <NotesPage updateUser={this.updateUser} notes={this.state.user.notes} />
-            </Route>
+            <PublicOnlyRoute exact path='/' component={LandingPage} />
+            <PublicOnlyRoute path='/signup' component={SignupFormPage} />
+            <PrivateRoute path='/homepage' component={UserHomepage} />
+            <PrivateRoute path='/boxes/:box_id' component={ExpandedBox} />
+            <PrivateRoute path='/boxes' component={BoxesPage} />
+            <PrivateRoute path='/boxform/:box_id' component={BoxForm} />
+            <PrivateRoute path='/boxform' component={BoxForm} />
+            <PrivateRoute path='/lists/:list_id' component={ExpandedList} />
+            <PrivateRoute path='/lists' component={ListsPage} />
+            <PrivateRoute path='/listform/:list_id' component={ListForm} />
+            <PrivateRoute path='/listform' component={ListForm} />
+            <PrivateRoute path='/contacts/:contact_id' component={ExpandedContact} />
+            <PrivateRoute path='/contacts' component={ContactsPage} />
+            <PrivateRoute path='/contactform/:contact_id' component={ContactForm} />
+            <PrivateRoute path='/contactform' component={ContactForm} />
+            <PrivateRoute path='/notes' component={NotesPage} />
           </Switch>
         </main>
       </>

@@ -1,17 +1,22 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
 
 class ExpandedContact extends React.Component {
+  static contextType = MovingdayContext
+
   render() {
+    // eslint-disable-next-line
+    const contact = this.context.contacts.find(contact => contact.id == this.props.match.params.contact_id)
     return (
       <section>
         <header>
-          <h2>{this.props.contact.name}</h2>
+          <h2>{contact.name}</h2>
         </header>
-        <p>Name: {this.props.contact.name}</p>
-        {this.props.contact.phone && <p>Phone Number: {this.props.contact.phone}</p>}
-        {this.props.contact.email && <p>Email Address: {this.props.contact.email}</p>}
-        {this.props.contact.notes && <p>Notes: {this.props.contact.notes}</p>}
+        <p>Name: {contact.name}</p>
+        {contact.phone && <p>Phone Number: {contact.phone}</p>}
+        {contact.email && <p>Email Address: {contact.email}</p>}
+        {contact.notes && <p>Notes: {contact.notes}</p>}
         <button type='button' onClick={e => this.props.history.push('/contactform')}>Edit</button>
         <button type='button'>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>

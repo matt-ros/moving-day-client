@@ -1,9 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
 
 class ExpandedList extends React.Component {
+static contextType = MovingdayContext
+
   render() {
-    const items = this.props.list.items.map((item, index) =>
+    // eslint-disable-next-line
+    const list = this.context.lists.find(list => list.id == this.props.match.params.list_id)
+    const items = Object.entries(list.list_items).map((item, index) =>
       <li key={index}>
         {item}
       </li>
@@ -11,7 +16,7 @@ class ExpandedList extends React.Component {
     return (
       <section>
         <header>
-          <h2>{this.props.list.name}</h2>
+          <h2>{list.list_name}</h2>
         </header>
         <ul>
           {items}

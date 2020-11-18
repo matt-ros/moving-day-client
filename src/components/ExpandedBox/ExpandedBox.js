@@ -1,9 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
 
 class ExpandedBox extends React.Component {
+  static contextType = MovingdayContext
+
   render() {
-    const inventory = this.props.box.inventory.map((item, index) =>
+    // eslint-disable-next-line
+    const box = this.context.boxes.find(box => box.id == this.props.match.params.box_id)
+    const inventory = box.inventory.map((item, index) =>
       <li key={index}>
         {item}
       </li>
@@ -11,19 +16,20 @@ class ExpandedBox extends React.Component {
     return (
       <section>
         <header>
-          <h2>{this.props.box.name}</h2>
+          <h2>{box.box_name}</h2>
         </header>
-        <p>Name: {this.props.box.name}</p>
-        {this.props.box.destination && <p>Destination: {this.props.box.destination}</p>}
-        {this.props.box.transport && <p>Transport Location: {this.props.box.transport}</p>}
-        {this.props.box.notes && <p>Notes: {this.props.box.notes}</p>}
+        <p>Name: {box.box_name}</p>
+        {box.coming_from && <p>Where's It Coming From? {box.coming_from}</p>}
+        {box.going_to && <p>Where's It Going To? {box.going_to}</p>}
+        {box.getting_there && <p>How's It Getting There? {box.getting_there}</p>}
+        {box.box_notes && <p>Notes: {box.box_notes}</p>}
         <h3>Inventory</h3>
-        {this.props.box.inventory[0] && 
+        {box.inventory.length && 
           <ul>
             {inventory}
           </ul>
         }
-        <button type='button' onClick={e => this.props.history.push('/boxform')}>Edit</button>
+        <button type='button' onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
         <button type='button'>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>
       </section>
