@@ -32,7 +32,7 @@ const BoxesApiService = {
   },
 
   getBox(boxId) {
-    return fetch(`${config.API_ENDPOINT}/boxes/${boxId}`, {
+    return fetch(`${config.API_BASE_URL}/boxes/${boxId}`, {
       headers: {
         'Authorization': `Bearer ${TokenService.getAuthToken()}`
       },

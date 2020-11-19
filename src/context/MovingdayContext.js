@@ -123,7 +123,8 @@ export class MovingdayProvider extends React.Component {
   }
 
   deleteContact = contactId => {
-    const newContacts = this.state.contacts.filter(contact => contact.id !== contactId)
+    const contacts = this.state.contacts
+    const newContacts = contacts.filter(contact => contact.id !== Number(contactId))
     this.setContacts(newContacts)
   }
 
@@ -163,6 +164,7 @@ export class MovingdayProvider extends React.Component {
           lists
         })
       })
+      .catch(res => this.setError(res.error))
   }
 
   render() {
@@ -182,7 +184,7 @@ export class MovingdayProvider extends React.Component {
       addBox: this.addBox,
       updateBox: this.updateBox,
       deleteBox: this.deleteBox,
-      addContact: this.updateContact,
+      addContact: this.addContact,
       updateContact: this.updateContact,
       deleteContact: this.deleteContact,
       addList: this.addList,

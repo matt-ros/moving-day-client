@@ -4,9 +4,28 @@ import MovingdayContext from '../../context/MovingdayContext';
 import Contact from '../Contact/Contact';
 
 class ContactsPage extends React.Component {
+  state = {
+    filter: '',
+    filter_type: 'contact_name'
+  }
+
   static contextType = MovingdayContext
   
+  handleChangeType = ev => {
+    this.setState({ filter_type: ev.target.value })
+  }
+
+  handleChangeFilter = ev => {
+    this.setState({ filter: ev.target.value })
+  }
+
   render() {
+    const contacts = this.state.filter
+      ? this.context.contacts.filter(contact => (
+        contact[this.state.filter_type] && contact[this.state.filter_type].toLowerCase().includes(this.state.filter.toLowerCase())
+      ))
+      : this.context.contacts
+
     return (
       <section className='contacts page'>
         <header>
@@ -18,23 +37,23 @@ class ContactsPage extends React.Component {
         <input type='text' name='filter' id='filter' onChange={this.handleChangeFilter} />
         <br />
         <div className='unit'>
-          <input type='radio' name='filter_type' id='contact_name' value='name' />
+          <input type='radio' name='filter_type' id='contact_name' value='contact_name' checked={this.state.filter_type === 'contact_name'} onChange={this.handleChangeType} />
           <label htmlFor='contact_name'>Name</label>
         </div>
         <div className='unit'>
-          <input type='radio' name='filter_type' id='contact_phone' value='phone' />
+          <input type='radio' name='filter_type' id='contact_phone' value='contact_phone' checked={this.state.filter_type === 'contact_phone'} onChange={this.handleChangeType} />
           <label htmlFor='contact_phone'>Phone Number</label>
         </div>
         <div className='unit'>
-          <input type='radio' name='filter_type' id='contact_email' value='email' />
+          <input type='radio' name='filter_type' id='contact_email' value='contact_email' checked={this.state.filter_type === 'contact_email'} onChange={this.handleChangeType} />
           <label htmlFor='contact_email'>Email Address</label>
         </div>
         <div className='unit'>
-          <input type='radio' name='filter_type' id='contact_notes' value='notes' />
+          <input type='radio' name='filter_type' id='contact_notes' value='contact_notes' checked={this.state.filter_type === 'contact_notes'} onChange={this.handleChangeType} />
           <label htmlFor='contact_notes'>Notes</label>
         </div>
         <ul>
-          {this.context.contacts.map(contact =>
+          {contacts.map(contact =>
             <Contact key={contact.id} contact={contact} history={this.props.history} />
           )}
         </ul>
