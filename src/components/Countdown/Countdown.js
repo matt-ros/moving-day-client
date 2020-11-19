@@ -22,8 +22,12 @@ class Countdown extends React.Component {
     return (
       <header className='countdown'>
         <h3>Today is {today.toDateString()}</h3>
-        <h3>Moving Day is {movingDay.toDateString()}</h3>
-        <h3>Moving in {diffInDays} days!</h3>
+        {diffInDays < 0
+          ? <h3>Your Moving Date Has Passed!</h3>
+          : <>
+              <h3>Moving Day is {movingDay.toDateString()}</h3>
+              <h3>Moving in {diffInDays} days!</h3>
+            </>}
         <form onSubmit={this.handleUpdateNotes}>
           <label htmlFor='moving_date'>Change Moving Day</label>
           {this.props.moving_date && <input type='date' name='moving_date' id='moving_date' defaultValue={formattedDate} />}
