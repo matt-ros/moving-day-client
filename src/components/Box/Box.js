@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MovingdayContext from '../../context/MovingdayContext';
+import BoxesApiService from '../../services/boxes-api-service';
 
 class Box extends React.Component {
+  static contextType = MovingdayContext
+
+  handleDelete = () => {
+    BoxesApiService.deleteBox(this.props.box.id)
+      .then(this.context.deleteBox(this.props.box.id))
+  }
+  
   render() {
     return (
       <li>
@@ -11,7 +20,7 @@ class Box extends React.Component {
           </Link>
         </h3>
         <button type='button' onClick={e => this.props.history.push(`/boxform/${this.props.box.id}`)}>Edit</button>
-        <button type='button'>Delete</button>
+        <button type='button' onClick={this.handleDelete}>Delete</button>
       </li>
     )
   }

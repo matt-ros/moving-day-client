@@ -1,9 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
+import BoxesApiService from '../../services/boxes-api-service';
 
 class ExpandedBox extends React.Component {
   static contextType = MovingdayContext
+
+  handleDelete = () => {
+    const boxId = this.props.match.params.box_id
+    BoxesApiService.deleteBox(boxId)
+      .then(this.context.deleteBox(this.props.match.params.box_id))
+      .then(this.props.history.push('/boxes'))
+  }
 
   render() {
     // eslint-disable-next-line
@@ -24,7 +32,7 @@ class ExpandedBox extends React.Component {
         <h3>Inventory</h3>
         {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
         <button type='button' onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
-        <button type='button'>Delete</button>
+        <button type='button' onClick={this.handleDelete}>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>
       </section>
     )

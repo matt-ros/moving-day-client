@@ -61,7 +61,7 @@ const BoxesApiService = {
   },
 
   deleteBox(boxId) {
-    return fetch(`${config.API_ENDPOINT}/boxes/${boxId}`, {
+    return fetch(`${config.API_BASE_URL}/boxes/${boxId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${TokenService.getAuthToken()}`

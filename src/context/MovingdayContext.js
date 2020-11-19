@@ -16,10 +16,13 @@ const MovingdayContext = React.createContext({
   updateUser: () => {},
   addBox: () => {},
   updateBox: () => {},
+  deleteBox: () => {},
   addContact: () => {},
   updateContact: () => {},
+  deleteContact: () => {},
   addList: () => {},
   updateList: () => {},
+  deleteList: () => {},
   onLogin: () => {},
 })
 
@@ -93,6 +96,12 @@ export class MovingdayProvider extends React.Component {
     this.setBoxes(boxes)
   }
 
+  deleteBox = boxId => {
+    const boxes = this.state.boxes
+    const newBoxes = boxes.filter(box => box.id !== Number(boxId))
+    this.setBoxes(newBoxes)
+  }
+
   addContact = contact => {
     const newContacts = [
       ...this.state.contacts,
@@ -113,6 +122,11 @@ export class MovingdayProvider extends React.Component {
     this.setContacts(contacts)
   }
 
+  deleteContact = contactId => {
+    const newContacts = this.state.contacts.filter(contact => contact.id !== contactId)
+    this.setContacts(newContacts)
+  }
+
   addList = list => {
     const newLists = [
       ...this.state.lists,
@@ -131,6 +145,11 @@ export class MovingdayProvider extends React.Component {
     }
     lists.splice(lists.findIndex(list => list.id === currentList.id), 1, updatedList)
     this.setLists(lists)
+  }
+
+  deleteList = listId => {
+    const newLists = this.state.lists.filter(list => list.id !== listId)
+    this.setLists(newLists)
   }
 
   onLogin = () => {
@@ -162,10 +181,13 @@ export class MovingdayProvider extends React.Component {
       updateUser: this.updateUser,
       addBox: this.addBox,
       updateBox: this.updateBox,
+      deleteBox: this.deleteBox,
       addContact: this.updateContact,
       updateContact: this.updateContact,
+      deleteContact: this.deleteContact,
       addList: this.addList,
       updateList: this.updateList,
+      deleteList: this.deleteList,
       onLogin: this.onLogin
     }
     return (
