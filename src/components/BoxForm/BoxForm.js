@@ -1,4 +1,5 @@
 import React from 'react';
+import BoxesApiService from '../../services/boxes-api-service';
 import MovingdayContext from '../../context/MovingdayContext';
 
 class BoxForm extends React.Component {
@@ -15,18 +16,40 @@ class BoxForm extends React.Component {
       const box = this.context.boxes.find(box => box.id == this.props.match.params.box_id)
       this.setState({ box })
     }
+    this.context.clearError()
   }
 
-  handleSubmitBox = e => {
-    e.preventDefault();
-    console.log('submit box')
-    const { box_name, coming_from, going_to, getting_there, box_notes } = e.target;
-    
+  resetVals = ev => {
+    const { box_name, coming_from, going_to, getting_there, box_notes } = ev.target;
     box_name.value = '';
     coming_from.value = '';
     going_to.value = '';
     getting_there.value = '';
     box_notes.value = '';
+    this.setState({ box: {}, changedFields: new Set() })
+  }
+
+  handleSubmitBox = ev => {
+    ev.preventDefault();
+    this.context.clearError()
+    const box = {}
+    if (this.state.changedFields.size === 0) {
+      return this.context.setError('You must edit at least one field')
+    }
+    const changedFields = Array.from(this.state.changedFields)
+    for (let i = 0; i < changedFields.length; i++) {
+      box[changedFields[i]] = this.state.box[changedFields[i]]
+    }
+    (this.props.match.params.box_id)
+      ? BoxesApiService.patchBox(this.props.match.params.box_id, box)
+          .then(this.context.updateBox(this.props.match.params.box_id, box))
+          .then(this.resetVals(ev))
+          .then(this.props.history.goBack)
+          .catch(this.context.setError)
+      : BoxesApiService.postBox(box)
+          .then(this.context.addBox)
+          .then(this.resetVals(ev))
+          .catch(this.context.setError)
   }
 
   handleSubmitItem = ev => {
@@ -60,16 +83,18 @@ class BoxForm extends React.Component {
     const inventory = (box.inventory)
       ? this.state.box.inventory.map((item, index) => <li key={index}>{item}</li>)
       : null
+    const error = this.context.error
     return (
       <li>
         <header role="banner">
           <h1>{(this.props.match.params.box_id) ? 'Edit Box' : 'Create Box'}</h1>
         </header>
         <section>
+          {error && <p>An error occurred</p>}
           <form id='box_form' onSubmit={this.handleSubmitBox}>
             <div>
               <label htmlFor="box_name">Box Name</label>
-              <input type="text" name="box_name" id="box_name" placeholder="Kitchen Box 1" onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_name : ''} />
+              <input type="text" name="box_name" id="box_name" placeholder="Kitchen Box 1" onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_name : ''} required />
             </div>
             <div>
               <label htmlFor="coming_from">Where's It Coming From?</label>

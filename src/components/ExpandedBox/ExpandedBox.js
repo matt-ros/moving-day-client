@@ -8,11 +8,9 @@ class ExpandedBox extends React.Component {
   render() {
     // eslint-disable-next-line
     const box = this.context.boxes.find(box => box.id == this.props.match.params.box_id)
-    const inventory = box.inventory.map((item, index) =>
-      <li key={index}>
-        {item}
-      </li>
-    )
+    const inventory = (box.inventory.length > 0)
+      ? box.inventory.map((item, index) => <li key={index}>{item}</li>)
+      : null
     return (
       <section>
         <header>
@@ -24,11 +22,7 @@ class ExpandedBox extends React.Component {
         {box.getting_there && <p>How's It Getting There? {box.getting_there}</p>}
         {box.box_notes && <p>Notes: {box.box_notes}</p>}
         <h3>Inventory</h3>
-        {box.inventory.length && 
-          <ul>
-            {inventory}
-          </ul>
-        }
+        {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
         <button type='button' onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
         <button type='button'>Delete</button>
         <button type='button' onClick={this.props.history.goBack}>Go Back</button>
