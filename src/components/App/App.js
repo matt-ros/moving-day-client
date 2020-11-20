@@ -10,15 +10,12 @@ import BoxesPage from '../BoxesPage/BoxesPage';
 import ExpandedBox from '../ExpandedBox/ExpandedBox';
 import ListsPage from '../ListsPage/ListsPage';
 import ExpandedList from '../ExpandedList/ExpandedList';
-import STORE from '../../STORE';
 import BoxForm from '../BoxForm/BoxForm';
 import ListForm from '../ListForm/ListForm';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactsPage from '../ContactsPage/ContactsPage';
 import ExpandedContact from '../ExpandedContact/ExpandedContact';
 import NotesPage from '../NotesPage/NotesPage';
-import UsersApiService from '../../services/users-api-service';
-import TokenService from '../../services/token-service';
 
 class App extends React.Component {
   state = {

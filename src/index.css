@@ -79,6 +79,10 @@ section:nth-child(even) {
   background-color: #ddd;
 }
 
+.checked {
+  text-decoration: line-through;
+}
+
 @media all and (min-width: 400px) {
   nav p {
     font-size: 30px;

@@ -54,7 +54,6 @@ class BoxForm extends React.Component {
 
   handleSubmitItem = ev => {
     ev.preventDefault();
-    console.log('submit item')
     const { box_item } = ev.target;
     const newInventory = (this.state.box.inventory) ? this.state.box.inventory : []
     newInventory.push(box_item.value)
@@ -65,6 +64,13 @@ class BoxForm extends React.Component {
     }
     this.setState({ box: newBox, changedFields })
     box_item.value = '';
+  }
+
+  handleDeleteItem = index => {
+    const { box } = this.state
+    box.inventory.splice(index, 1)
+    const changedFields = this.state.changedFields.add('inventory')
+    this.setState({ box, changedFields })
   }
 
   handleChange = ev => {
@@ -81,11 +87,11 @@ class BoxForm extends React.Component {
   render() {
     const { box } = this.state
     const inventory = (box.inventory)
-      ? this.state.box.inventory.map((item, index) => <li key={index}>{item}</li>)
+      ? this.state.box.inventory.map((item, index) => <li key={index}>{item}<button type='button' onClick={e => this.handleDeleteItem(index)}>Delete Item</button></li>)
       : null
     const error = this.context.error
     return (
-      <li>
+      <>
         <header role="banner">
           <h1>{(this.props.match.params.box_id) ? 'Edit Box' : 'Create Box'}</h1>
         </header>
@@ -125,7 +131,7 @@ class BoxForm extends React.Component {
           {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
           <button type='button' onClick={this.props.history.goBack}>Go Back</button>
         </section>
-      </li>
+      </>
     )
   }
 }

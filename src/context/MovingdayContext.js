@@ -149,7 +149,8 @@ export class MovingdayProvider extends React.Component {
   }
 
   deleteList = listId => {
-    const newLists = this.state.lists.filter(list => list.id !== listId)
+    const { lists } = this.state
+    const newLists = lists.filter(list => list.id !== Number(listId))
     this.setLists(newLists)
   }
 
