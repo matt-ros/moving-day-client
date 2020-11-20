@@ -29,6 +29,9 @@ class LandingPage extends React.Component {
         </section>
 
         <Link to={'/signup'}><h4>Sign Up Now!</h4></Link>
+        <p>Or log in to demo account:</p>
+        <p>Username: demo</p>
+        <p>Password: Password1!</p>
       </>
     )
   }
