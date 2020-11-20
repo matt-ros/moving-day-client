@@ -5,13 +5,19 @@ import List from '../List/List';
 
 class ListsPage extends React.Component {
   static contextType = MovingdayContext
+
+  componentDidMount() {
+    this.context.clearError()
+  }
   
   render() {
+    const { error } = this.context
     return (
       <section className='lists page'>
         <h2>
           To-Do Lists
         </h2>
+        {error && <p>{error}</p>}
         <ul>
           {this.context.lists.map(list =>
             <List key={list.id} list={list} history={this.props.history} />

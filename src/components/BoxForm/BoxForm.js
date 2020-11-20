@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import BoxesApiService from '../../services/boxes-api-service';
 import MovingdayContext from '../../context/MovingdayContext';
 
@@ -45,11 +46,11 @@ class BoxForm extends React.Component {
           .then(this.context.updateBox(this.props.match.params.box_id, box))
           .then(this.resetVals(ev))
           .then(this.props.history.goBack)
-          .catch(this.context.setError)
+          .catch(res => this.context.setError(res.error))
       : BoxesApiService.postBox(box)
           .then(this.context.addBox)
           .then(this.resetVals(ev))
-          .catch(this.context.setError)
+          .catch(res => this.context.setError(res.error))
   }
 
   handleSubmitItem = ev => {
@@ -86,17 +87,23 @@ class BoxForm extends React.Component {
   
   render() {
     const { box } = this.state
+    if (!box) {
+      return <Redirect to='/boxes' />
+    }
+
     const inventory = (box.inventory)
       ? this.state.box.inventory.map((item, index) => <li key={index}>{item}<button type='button' onClick={e => this.handleDeleteItem(index)}>Delete Item</button></li>)
       : null
-    const error = this.context.error
+
+    const { error } = this.context
+
     return (
       <>
         <header role="banner">
           <h1>{(this.props.match.params.box_id) ? 'Edit Box' : 'Create Box'}</h1>
         </header>
         <section>
-          {error && <p>An error occurred</p>}
+          {error && <p>{error}</p>}
           <form id='box_form' onSubmit={this.handleSubmitBox}>
             <div>
               <label htmlFor="box_name">Box Name</label>

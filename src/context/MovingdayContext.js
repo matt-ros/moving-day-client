@@ -24,6 +24,7 @@ const MovingdayContext = React.createContext({
   updateList: () => {},
   deleteList: () => {},
   onLogin: () => {},
+  onLogOut: () => {},
 })
 
 export default MovingdayContext
@@ -38,7 +39,7 @@ export class MovingdayProvider extends React.Component {
   }
 
   componentDidMount() {
-    if (TokenService.hasAuthToken()) {
+    if (TokenService.hasUnexpiredAuthToken()) {
       this.onLogin()
     }
   }
@@ -168,6 +169,16 @@ export class MovingdayProvider extends React.Component {
       .catch(res => this.setError(res.error))
   }
 
+  onLogOut = () => {
+    this.setState({
+      user: {},
+      boxes: [],
+      contacts: [],
+      lists: [],
+      error: null
+    })
+  }
+
   render() {
     const value = {
       user: this.state.user,
@@ -191,8 +202,10 @@ export class MovingdayProvider extends React.Component {
       addList: this.addList,
       updateList: this.updateList,
       deleteList: this.deleteList,
-      onLogin: this.onLogin
+      onLogin: this.onLogin,
+      onLogOut: this.onLogOut,
     }
+
     return (
       <MovingdayContext.Provider value={value}>
         {this.props.children}

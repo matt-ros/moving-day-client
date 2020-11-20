@@ -11,6 +11,10 @@ class BoxesPage extends React.Component {
 
   static contextType = MovingdayContext
 
+  componentDidMount() {
+    this.context.clearError()
+  }
+
   handleChangeType = event => {
     this.setState({ filter_type: event.target.value })
   }
@@ -26,6 +30,8 @@ class BoxesPage extends React.Component {
         ))
       : this.context.boxes
 
+    const { error } = this.context
+    
     return (
       <section className='boxes page'>
         <header>
@@ -33,6 +39,7 @@ class BoxesPage extends React.Component {
             Boxes
           </h2>
         </header>
+        {error && <p>{error}</p>}
         <label htmlFor='filter'>Filter</label>{' '}
         <input type='text' name='filter' id='filter' onChange={this.handleChangeFilter} />
         <br />

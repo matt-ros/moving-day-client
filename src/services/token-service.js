@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode'
 import config from '../config'
 
 const TokenService = {
@@ -13,8 +14,19 @@ const TokenService = {
     window.sessionStorage.removeItem(config.TOKEN_KEY)
   },
 
-  hasAuthToken() {
-    return !!TokenService.getAuthToken()
+  hasUnexpiredAuthToken() {
+    const token = TokenService.getAuthToken()
+    if (!token) {
+      return false
+    }
+    const payload = jwtDecode(token)
+    const expiryTime = payload.exp
+    const currentTime = new Date().getTime() / 1000
+    if (expiryTime > currentTime) {
+      return true
+    }
+    TokenService.clearAuthToken()
+    return false
   }
 }
 

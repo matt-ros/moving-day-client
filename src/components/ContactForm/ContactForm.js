@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import ContactsApiService from '../../services/contacts-api-service';
 
@@ -27,8 +28,6 @@ class ContactForm extends React.Component {
     contact_notes.value = ''
   }
 
-
-
   handleSubmitContact = ev => {
     ev.preventDefault()
     this.context.clearError()
@@ -45,11 +44,11 @@ class ContactForm extends React.Component {
           .then(this.context.updateContact(this.props.match.params.contact_id, contact))
           .then(this.resetVals(ev))
           .then(this.props.history.goBack)
-          .catch(this.context.setError)
+          .catch(res => this.context.setError(res.error))
       : ContactsApiService.postContact(contact)
           .then(this.context.addContact)
           .then(this.resetVals(ev))
-          .catch(this.context.setError)
+          .catch(res => this.context.setError(res.error))
   }
 
   handleChange = ev => {
@@ -65,6 +64,9 @@ class ContactForm extends React.Component {
 
   render() {
     const { contact } = this.state
+    if (!contact) {
+      return <Redirect to='/contacts' />
+    }
     const { error } = this.context
     return (
       <>
@@ -72,7 +74,7 @@ class ContactForm extends React.Component {
         <h1>{(this.props.match.params.contact_id) ? 'Edit Contact' : 'Create Contact'}</h1>
         </header>
         <section>
-          {error && <p>An error occurred</p>}
+          {error && <p>{error}</p>}
           <form id='contact_form' onSubmit={this.handleSubmitContact}>
             <div>
               <label htmlFor="contact_name">Contact Name</label>

@@ -24,13 +24,14 @@ class Nav extends React.Component {
         this.props.history.push('/homepage');
       })
       .catch(res => {
-        this.context.setError(res)
+        this.context.setError(res.error)
       })
   }
 
   handleClickLogout = e => {
     e.preventDefault();
     TokenService.clearAuthToken();
+    this.context.onLogOut();
     this.props.history.push('/');
   }
 
@@ -83,11 +84,11 @@ class Nav extends React.Component {
     return (
       <nav>
         <p className='unit'>
-          {TokenService.hasAuthToken()
+          {TokenService.hasUnexpiredAuthToken()
             ? this.renderLinks()
             : this.renderEmpty()}
         </p>
-        {TokenService.hasAuthToken()
+        {TokenService.hasUnexpiredAuthToken()
           ? this.renderLogoutButton()
           : this.renderLoginForm()}
       </nav>

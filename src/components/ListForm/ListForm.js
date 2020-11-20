@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import ListsApiService from '../../services/lists-api-service';
 
@@ -82,18 +83,22 @@ class ListForm extends React.Component {
 
   handleClickChecked = item => {
     const { list } = this.state
-    list.list_items[item] ? list.list_items[item] = false : list.list_items[item] = true
+    list.list_items[item] = !list.list_items[item]
     const changedFields = this.state.changedFields.add('list_items')
     this.setState({ list, changedFields })
   }
 
   render() {
     const { list } = this.state
+    if (!list) {
+      return <Redirect to='/lists' />
+    }
+    
     const items = (list.list_items)
       ? Object.entries(list.list_items).map(([key, value], index) =>
           <li key={index} className={value ? 'checked' : ''}>
             {key}
-            <button type='button' onClick={e => this.handleClickChecked(key)}>Check Off</button>
+            <button type='button' onClick={e => this.handleClickChecked(key)}>Check/Uncheck</button>
             <button type='button' onClick={e => this.handleDeleteItem(key)}>Delete</button>
           </li>
         )
@@ -105,7 +110,7 @@ class ListForm extends React.Component {
         <h1>{(this.props.match.params.list_id) ? 'Edit List' : 'Create List'}</h1>
         </header>
         <section>
-        {error && <p>An error occurred</p>}
+        {error && <p>{error}</p>}
           <form id='list_form' onSubmit={this.handleSubmitList}>
             <div>
               <label htmlFor="list_name">List Name</label>
@@ -121,7 +126,7 @@ class ListForm extends React.Component {
           </div>
           <button type="submit" form='list_form'>Save</button>
           <h2>List Items</h2>
-          {(items) ? <ul>{items}</ul> : <p>Empty</p>}
+          {items ? <ul>{items}</ul> : <p>None</p>}
           <button type='button' onClick={this.props.history.goBack}>Go Back</button>
         </section>
       </>

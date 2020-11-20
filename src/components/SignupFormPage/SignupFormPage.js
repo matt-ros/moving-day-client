@@ -27,12 +27,14 @@ class SignupFormPage extends React.Component {
   }
 
   render() {
+    const { error } = this.context
     return (
       <>
       <header role="banner">
         <h1>Sign Up!</h1>
       </header>
       <section>
+        {error && <p>{error}</p>}
         <form onSubmit={this.handleSignup}>
           <div>
             <label htmlFor="full_name">Full Name</label>

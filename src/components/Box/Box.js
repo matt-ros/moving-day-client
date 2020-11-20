@@ -9,8 +9,9 @@ class Box extends React.Component {
   handleDelete = () => {
     BoxesApiService.deleteBox(this.props.box.id)
       .then(this.context.deleteBox(this.props.box.id))
+      .catch(res => this.context.setError(res.error))
   }
-  
+
   render() {
     return (
       <li>

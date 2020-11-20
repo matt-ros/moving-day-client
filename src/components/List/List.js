@@ -9,6 +9,7 @@ class List extends React.Component {
   handleDelete = () => {
     ListsApiService.deleteList(this.props.list.id)
       .then(this.context.deleteList(this.props.list.id))
+      .catch(res => this.context.setError(res.error))
   }
 
   render() {

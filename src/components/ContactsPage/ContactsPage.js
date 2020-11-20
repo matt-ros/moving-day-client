@@ -10,6 +10,10 @@ class ContactsPage extends React.Component {
   }
 
   static contextType = MovingdayContext
+
+  componentDidMount() {
+    this.context.clearError()
+  }
   
   handleChangeType = ev => {
     this.setState({ filter_type: ev.target.value })
@@ -26,6 +30,8 @@ class ContactsPage extends React.Component {
       ))
       : this.context.contacts
 
+    const { error } = this.context
+
     return (
       <section className='contacts page'>
         <header>
@@ -33,6 +39,7 @@ class ContactsPage extends React.Component {
             Contacts
           </h2>
         </header>
+        {error && <p>{error}</p>}
         <label htmlFor='filter'>Filter</label>{' '}
         <input type='text' name='filter' id='filter' onChange={this.handleChangeFilter} />
         <br />

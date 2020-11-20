@@ -10,23 +10,32 @@ class NotesPage extends React.Component {
 
   static contextType = MovingdayContext
 
-  handleChange = (e) => {
-    this.setState({ notes: e.target.value })
+  componentDidMount() {
+    this.context.clearError()
+    this.setState({ notes: this.context.user.notes })
+  }
+
+  handleChange = ev => {
+    this.setState({ notes: ev.target.value })
   }
 
   handleUpdateNotes = e => {
     e.preventDefault();
+    this.context.clearError()
     UsersApiService.patchUser({ notes: this.state.notes })
       .then(this.context.updateUser({ notes: this.state.notes }))
+      .catch(res => this.context.setError(res.error))
   }
 
   render() {
+    const { error } = this.context
     return (
       <section className='notes page'>
         <h2>
           Notes
         </h2>
         <p>{this.context.user.notes}</p>
+        {error && <p>{error}</p>}
         <form id='note_form' onSubmit={this.handleUpdateNotes}>
           <textarea id='notes' name='notes' cols='30' rows='5' defaultValue={this.context.user.notes} onChange={this.handleChange} />
           <br />

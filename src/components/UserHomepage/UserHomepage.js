@@ -8,7 +8,7 @@ class UserHomepage extends React.Component {
   render() {
     return (
       <>
-        <Countdown updateUser={this.context.updateUser} moving_date={this.context.user.moving_date} />
+        <Countdown updateUser={this.context.updateUser} setError={this.context.setError} moving_date={this.context.user.moving_date} />
 
         <div className='links'>
           <Link to={'/lists'}>

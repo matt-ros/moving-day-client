@@ -9,7 +9,9 @@ class Contact extends React.Component {
   handleDelete= () => {
     ContactsApiService.deleteContact(this.props.contact.id)
       .then(this.context.deleteContact(this.props.contact.id))
+      .catch(res => this.context.setError(res.error))
   }
+  
   render() {
     return (
       <li>
