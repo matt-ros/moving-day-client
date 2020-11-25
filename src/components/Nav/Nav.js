@@ -28,8 +28,8 @@ class Nav extends React.Component {
       })
   }
 
-  handleClickLogout = e => {
-    e.preventDefault();
+  handleClickLogout = ev => {
+    ev.preventDefault();
     TokenService.clearAuthToken();
     this.context.onLogOut();
     this.props.history.push('/');
@@ -45,7 +45,7 @@ class Nav extends React.Component {
         <label htmlFor="user_name">Username</label>{' '}
         <input type="text" name="user_name" id="user_name" /><br />
         <label htmlFor="password">Password</label>{' '}
-        <input type="password" name="password" id="password" />{' '}
+        <input type="password" name="password" id="password" /><br />
         <button type="submit">Login</button>
       </form>
     )
@@ -53,13 +53,13 @@ class Nav extends React.Component {
 
   renderLogoutButton() {
     return (
-      <button type='button' onClick={this.handleClickLogout}>Logout</button>
+      <button type='button' className='logout' onClick={this.handleClickLogout}>Logout</button>
     )
   }
 
   renderLinks() {
     return (
-      <>
+      <p className='unit'>
         <Link to='/homepage'>Home</Link> |
         {' '}
         <Link to='/lists'>To-Do Lists</Link> |
@@ -69,25 +69,23 @@ class Nav extends React.Component {
         <Link to='/contacts'>Contacts</Link> |
         {' '}
         <Link to='/notes'>Notes</Link>
-      </>
+      </p>
     )
   }
 
   renderEmpty() {
     return (
-      <>
-      </>
+      <p>
+      </p>
     )
   }
 
   render() {
     return (
       <nav>
-        <p className='unit'>
-          {TokenService.hasUnexpiredAuthToken()
-            ? this.renderLinks()
-            : this.renderEmpty()}
-        </p>
+        {TokenService.hasUnexpiredAuthToken()
+          ? this.renderLinks()
+          : this.renderEmpty()}
         {TokenService.hasUnexpiredAuthToken()
           ? this.renderLogoutButton()
           : this.renderLoginForm()}

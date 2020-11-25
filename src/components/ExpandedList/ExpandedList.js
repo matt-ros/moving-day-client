@@ -46,8 +46,10 @@ class ExpandedList extends React.Component {
       ? Object.entries(list.list_items).map(([key, value], index) =>
           <li key={index} className={value ? 'checked' : ''}>
             {key}
-            <button type='button' onClick={e => this.handleClickChecked(key)}>Check Off</button>
-            <button type='button' onClick={e => this.handleDeleteItem(key)}>Delete</button>
+            <div className='buttons'>
+              <button type='button' onClick={e => this.handleClickChecked(key)}>{value ? 'Uncheck' : 'Check'}</button>
+              <button type='button' onClick={e => this.handleDeleteItem(key)}>Delete</button>
+            </div>
           </li>
         )
       : null
@@ -55,15 +57,17 @@ class ExpandedList extends React.Component {
 
     return (
       <section>
-        <header>
-          <h2>{list.list_name}</h2>
-        </header>
-        {error && <p>{error}</p>}
-        <h3>List Items</h3>
-        {items.length > 0 ? <ul>{items}</ul> : <p>None</p>}
-        <button type='button' onClick={e => this.props.history.push(`/listform/${list.id}`)}>Edit</button>
-        <button type='button' onClick={this.handleDeleteList}>Delete</button>
-        <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        <div className='exp list'>
+          <header>
+            <h2>{list.list_name}</h2>
+          </header>
+          {error && <p>{error}</p>}
+          <h3>List Items</h3>
+          {items.length > 0 ? <ul>{items}</ul> : <p>None</p>}
+          <button type='button' onClick={e => this.props.history.push(`/listform/${list.id}`)}>Edit</button>
+          <button type='button' onClick={this.handleDeleteList}>Delete</button>
+          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        </div>
       </section>
     )
   }

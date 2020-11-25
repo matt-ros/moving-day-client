@@ -39,7 +39,7 @@ class BoxesPage extends React.Component {
             Boxes
           </h2>
         </header>
-        {error && <p>{error}</p>}
+        {error && <p className='error'>{error}</p>}
         <label htmlFor='filter'>Filter</label>{' '}
         <input type='text' name='filter' id='filter' onChange={this.handleChangeFilter} />
         <br />
@@ -47,23 +47,32 @@ class BoxesPage extends React.Component {
           <input type='radio' name='filter_type' id='box_name' value='box_name' checked={this.state.filter_type === 'box_name'} onChange={this.handleChangeType} />
           <label htmlFor='box_name'>Name</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='coming_from' value='coming_from' checked={this.state.filter_type === 'coming_from'} onChange={this.handleChangeType} />
           <label htmlFor='coming_from'>Coming From</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='going_to' value='going_to' checked={this.state.filter_type === 'going_to'} onChange={this.handleChangeType} />
           <label htmlFor='going_to'>Going To</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='getting_there' value='getting_there' checked={this.state.filter_type === 'getting_there'} onChange={this.handleChangeType} />
           <label htmlFor='getting_there'>Getting There</label>
         </div>
+        {' '}
+        <div className='unit'>
+          <input type='radio' name='filter_type' id='color_code' value='color_code' checked={this.state.filter_type === 'color_code'} onChange={this.handleChangeType} />
+          <label htmlFor='color_code'>Color Code</label>
+        </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='box_notes' value='box_notes' checked={this.state.filter_type === 'box_notes'} onChange={this.handleChangeType} />
           <label htmlFor='box_notes'>Notes</label>
         </div>
-        <ul>
+        <ul className='boxes-list'>
           {boxes.map(box =>
             <Box key={box.id} box={box} history={this.props.history} />
           )}

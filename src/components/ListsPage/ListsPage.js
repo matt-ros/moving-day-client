@@ -18,7 +18,7 @@ class ListsPage extends React.Component {
           To-Do Lists
         </h2>
         {error && <p>{error}</p>}
-        <ul>
+        <ul className='lists-list'>
           {this.context.lists.map(list =>
             <List key={list.id} list={list} history={this.props.history} />
           )}

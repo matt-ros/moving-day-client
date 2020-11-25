@@ -14,7 +14,7 @@ class List extends React.Component {
 
   render() {
     return (
-      <li>
+      <li className='list'>
         <h3>
           <Link to={`/lists/${this.props.list.id}`}>
             {this.props.list.list_name}

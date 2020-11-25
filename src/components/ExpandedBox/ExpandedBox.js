@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import BoxesApiService from '../../services/boxes-api-service';
+import TokenService from '../../services/token-service';
 
 class ExpandedBox extends React.Component {
   static contextType = MovingdayContext
@@ -24,7 +25,16 @@ class ExpandedBox extends React.Component {
     box.inventory.splice(index, 1)
     BoxesApiService.patchBox(box.id, { inventory: box.inventory })
       .then(this.context.updateBox(box.id, { inventory: box.inventory }))
-      .catch(res => this.context.setError(res.error))
+      .catch(res => {
+        if (res.error === 'Unauthorized request') {
+          TokenService.clearAuthToken();
+          this.context.onLogOut();
+          this.context.setError(res.error);
+          this.props.history.push('/');
+        } else {
+          this.context.setError(res.error);
+        }
+      })
   }
 
   render() {
@@ -42,20 +52,22 @@ class ExpandedBox extends React.Component {
 
     return (
       <section>
-        <header>
-          <h2>{box.box_name}</h2>
-        </header>
-        {error && <p>{error}</p>}
-        <p>Name: {box.box_name}</p>
-        {box.coming_from && <p>Where's It Coming From? {box.coming_from}</p>}
-        {box.going_to && <p>Where's It Going To? {box.going_to}</p>}
-        {box.getting_there && <p>How's It Getting There? {box.getting_there}</p>}
-        {box.box_notes && <p>Notes: {box.box_notes}</p>}
-        <h3>Inventory</h3>
-        {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
-        <button type='button' onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
-        <button type='button' onClick={this.handleDeleteBox}>Delete</button>
-        <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        <div className='exp box'>
+          <header>
+            <h2>{box.box_name}</h2>
+          </header>
+          {error && <p>{error}</p>}
+          {box.coming_from && <p><strong>Where's It Coming From?</strong> {box.coming_from}</p>}
+          {box.going_to && <p><strong>Where's It Going To?</strong> {box.going_to}</p>}
+          {box.getting_there && <p><strong>How's It Getting There?</strong> {box.getting_there}</p>}
+          {box.color_code && <p><strong>Color Code:</strong> {box.color_code}</p>}
+          {box.box_notes && <p><strong>Notes:</strong> {box.box_notes}</p>}
+          <h3>Inventory</h3>
+          {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
+          <button type='button' onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
+          <button type='button' onClick={this.handleDeleteBox}>Delete</button>
+          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        </div>
       </section>
     )
   }

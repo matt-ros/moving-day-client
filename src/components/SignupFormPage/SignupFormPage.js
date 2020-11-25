@@ -5,9 +5,13 @@ import UsersApiService from '../../services/users-api-service';
 class SignupFormPage extends React.Component {
   static contextType = MovingdayContext
 
-  handleSignup = (e) => {
-    e.preventDefault();
-    const { full_name, user_name, password, moving_date } = e.target;
+  componentDidMount() {
+    this.context.clearError()
+  }
+
+  handleSignup = (ev) => {
+    ev.preventDefault();
+    const { full_name, user_name, password, moving_date } = ev.target;
     const user = {
       full_name: full_name.value,
       user_name: user_name.value,
@@ -30,12 +34,12 @@ class SignupFormPage extends React.Component {
     const { error } = this.context
     return (
       <>
-      <header role="banner">
+      <header className='title' role="banner">
         <h1>Sign Up!</h1>
       </header>
-      <section>
+      <section className='signup form'>
         {error && <p>{error}</p>}
-        <form onSubmit={this.handleSignup}>
+        <form id='signup_form' onSubmit={this.handleSignup}>
           <div>
             <label htmlFor="full_name">Full Name</label>
             <input type="text" name="full_name" id="full_name" required />

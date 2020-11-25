@@ -47,19 +47,22 @@ class ContactsPage extends React.Component {
           <input type='radio' name='filter_type' id='contact_name' value='contact_name' checked={this.state.filter_type === 'contact_name'} onChange={this.handleChangeType} />
           <label htmlFor='contact_name'>Name</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='contact_phone' value='contact_phone' checked={this.state.filter_type === 'contact_phone'} onChange={this.handleChangeType} />
           <label htmlFor='contact_phone'>Phone Number</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='contact_email' value='contact_email' checked={this.state.filter_type === 'contact_email'} onChange={this.handleChangeType} />
           <label htmlFor='contact_email'>Email Address</label>
         </div>
+        {' '}
         <div className='unit'>
           <input type='radio' name='filter_type' id='contact_notes' value='contact_notes' checked={this.state.filter_type === 'contact_notes'} onChange={this.handleChangeType} />
           <label htmlFor='contact_notes'>Notes</label>
         </div>
-        <ul>
+        <ul className='contacts-list'>
           {contacts.map(contact =>
             <Contact key={contact.id} contact={contact} history={this.props.history} />
           )}

@@ -32,23 +32,25 @@ class Countdown extends React.Component {
     const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
 
     return (
-      <header className='countdown'>
-        <h3>Today is {today.toDateString()}</h3>
-        {(movingDate.toISOString() === new Date(null).toISOString())
-            ? this.renderNoMovingDate()
-            : (diffInDays < 0)
-                ? this.renderMovingDatePassed()
-                : <>
-                    <h3>Moving Day is {movingDay.toDateString()}</h3>
-                    <h3>Moving in {diffInDays} days!</h3>
-                  </>
-        }
-        <form onSubmit={this.handleUpdateMovingDate}>
-          <label htmlFor='moving_date'>Change Moving Day</label>
-          {this.props.moving_date && <input type='date' name='moving_date' id='moving_date' defaultValue={(movingDate.toISOString() === new Date(null).toISOString()) ? null : formattedDate} />}
-          <button type='submit'>Update</button>
-        </form>
-      </header>
+      <section>
+        <header className='countdown'>
+          <h3>Today is {today.toDateString()}</h3>
+          {(movingDate.toISOString() === new Date(null).toISOString())
+              ? this.renderNoMovingDate()
+              : (diffInDays < 0)
+                  ? this.renderMovingDatePassed()
+                  : <>
+                      <h3>Moving Day is {movingDay.toDateString()}</h3>
+                      <h3>Moving in {diffInDays} days!</h3>
+                    </>
+          }
+          <form onSubmit={this.handleUpdateMovingDate}>
+            <label htmlFor='moving_date'>Change Moving Day</label>
+            {this.context.user.moving_date && <input type='date' name='moving_date' id='moving_date' defaultValue={(movingDate.toISOString() === new Date(null).toISOString()) ? null : formattedDate} />}
+            <button type='submit'>Update</button>
+          </form>
+        </header>
+      </section>
     )
   }
 }

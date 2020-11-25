@@ -27,17 +27,18 @@ class ExpandedContact extends React.Component {
     const { error } = this.context
     return (
       <section>
-        <header>
-          <h2>{contact.contact_name}</h2>
-        </header>
-        {error && <p>{error}</p>}
-        <p>Name: {contact.contact_name}</p>
-        {contact.contact_phone && <p>Phone Number: {contact.contact_phone}</p>}
-        {contact.contact_email && <p>Email Address: {contact.contact_email}</p>}
-        {contact.contact_notes && <p>Notes: {contact.contact_notes}</p>}
-        <button type='button' onClick={e => this.props.history.push(`/contactform/${contact.id}`)}>Edit</button>
-        <button type='button' onClick={this.handleDelete}>Delete</button>
-        <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        <div className='contact'>
+          <header>
+            <h2>{contact.contact_name}</h2>
+          </header>
+          {error && <p>{error}</p>}
+          {contact.contact_phone && <p><strong>Phone Number: </strong>{contact.contact_phone}</p>}
+          {contact.contact_email && <p><strong>Email Address: </strong>{contact.contact_email}</p>}
+          {contact.contact_notes && <p><strong>Notes: </strong>{contact.contact_notes}</p>}
+          <button type='button' onClick={e => this.props.history.push(`/contactform/${contact.id}`)}>Edit</button>
+          <button type='button' onClick={this.handleDelete}>Delete</button>
+          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+        </div>
       </section>
     )
   }

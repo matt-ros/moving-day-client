@@ -93,7 +93,7 @@ export class MovingdayProvider extends React.Component {
       ...currentBox,
       ...fields
     }
-    boxes.splice(boxes.findIndex(box => box.id === currentBox.id), 1, updatedBox).sort((a, b) => a.id - b.id)
+    boxes.splice(boxes.findIndex(box => box.id === currentBox.id), 1, updatedBox)
     this.setBoxes(boxes)
   }
 

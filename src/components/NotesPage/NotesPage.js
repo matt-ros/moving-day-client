@@ -34,13 +34,15 @@ class NotesPage extends React.Component {
         <h2>
           Notes
         </h2>
-        <p>{this.context.user.notes}</p>
-        {error && <p>{error}</p>}
-        <form id='note_form' onSubmit={this.handleUpdateNotes}>
-          <textarea id='notes' name='notes' cols='30' rows='5' defaultValue={this.context.user.notes} onChange={this.handleChange} />
-          <br />
-          <button type='submit' form='note_form'>Update</button>
-        </form>
+        <div className='note'>
+          <p>{this.context.user.notes}</p>
+          {error && <p>{error}</p>}
+          <form id='note_form' onSubmit={this.handleUpdateNotes}>
+            <textarea id='notes' name='notes' cols='30' rows='5' defaultValue={this.context.user.notes} onChange={this.handleChange} />
+            <br />
+            <button type='submit' form='note_form'>Update</button>
+          </form>
+        </div>
       </section>
     )
   }

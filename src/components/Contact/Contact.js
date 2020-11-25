@@ -14,7 +14,7 @@ class Contact extends React.Component {
   
   render() {
     return (
-      <li>
+      <li className='contact'>
         <h3>
           <Link to={`/contacts/${this.props.contact.id}`}>
             {this.props.contact.contact_name}

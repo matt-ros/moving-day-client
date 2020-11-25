@@ -15,7 +15,7 @@ class ListForm extends React.Component {
     if (this.props.match.params.list_id) {
       // eslint-disable-next-line
       const list = this.context.lists.find(list => list.id == this.props.match.params.list_id)
-      this.setState({ list })
+      this.setState({ list, origList: list })
     }
     this.context.clearError()
   }
@@ -87,6 +87,20 @@ class ListForm extends React.Component {
     const changedFields = this.state.changedFields.add('list_items')
     this.setState({ list, changedFields })
   }
+  
+  handleFocus = ev => {
+    const { origList } = this.state
+    if (origList && ev.target.value === origList[ev.target.name]) {
+      ev.target.value = ''
+    }
+  }
+
+  handleBlur = ev => {
+    const { origList } = this.state
+    if (origList && ev.target.value === '') {
+      ev.target.value = origList[ev.target.name]
+    }
+  }
 
   render() {
     const { list } = this.state
@@ -98,7 +112,7 @@ class ListForm extends React.Component {
       ? Object.entries(list.list_items).map(([key, value], index) =>
           <li key={index} className={value ? 'checked' : ''}>
             {key}
-            <button type='button' onClick={e => this.handleClickChecked(key)}>Check/Uncheck</button>
+            <button type='button' onClick={e => this.handleClickChecked(key)}>{value ? 'Uncheck' : 'Check'}</button>
             <button type='button' onClick={e => this.handleDeleteItem(key)}>Delete</button>
           </li>
         )
@@ -106,23 +120,26 @@ class ListForm extends React.Component {
     const { error } = this.context
     return (
       <>
-        <header role="banner">
-        <h1>{(this.props.match.params.list_id) ? 'Edit List' : 'Create List'}</h1>
-        </header>
-        <section>
+        <section className='lists'>
+          <header role="banner">
+            <h1>{(this.props.match.params.list_id) ? 'Edit List' : 'Create List'}</h1>
+          </header>
         {error && <p>{error}</p>}
-          <form id='list_form' onSubmit={this.handleSubmitList}>
+          <div className='list_form_container'>
+            <form className='form' id='list_form' onSubmit={this.handleSubmitList}>
+              <div>
+                <label htmlFor="list_name">List Name</label>
+                <input type="text" name="list_name" id="list_name" placeholder="Steve's List" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
+              </div>
+            </form> 
             <div>
-              <label htmlFor="list_name">List Name</label>
-              <input type="text" name="list_name" id="list_name" placeholder="Steve's List" onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
+              <form className='form' onSubmit={this.handleSubmitItem}>
+                <label htmlFor="list_item">List Item</label>
+                <input type="text" name="list_item" id="list_item" placeholder="Buy tape" />
+                <button type="submit">Add Item</button>
+              </form>
             </div>
-          </form> 
-          <div>
-            <form onSubmit={this.handleSubmitItem}>
-              <label htmlFor="list_item">List Item</label>
-              <input type="text" name="list_item" id="list_item" placeholder="Buy tape" />
-              <button type="submit">Add Item</button>
-            </form>
+
           </div>
           <button type="submit" form='list_form'>Save</button>
           <h2>List Items</h2>

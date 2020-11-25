@@ -14,7 +14,7 @@ class Box extends React.Component {
 
   render() {
     return (
-      <li>
+      <li className='box'>
         <h3>
           <Link to={`/boxes/${this.props.box.id}`}>
             {this.props.box.box_name}

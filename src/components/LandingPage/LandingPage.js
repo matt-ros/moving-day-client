@@ -5,7 +5,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <>
-        <header role="banner">
+        <header className='title' role="banner">
           <h1>Moving Day</h1>
           <h2>Move Better</h2>
         </header>
@@ -28,10 +28,12 @@ class LandingPage extends React.Component {
           <p>Record all your move-related contacts so everything is in one place</p>
         </section>
 
-        <Link to={'/signup'}><h4>Sign Up Now!</h4></Link>
-        <p>Or log in to demo account:</p>
-        <p>Username: demo</p>
-        <p>Password: Password1!</p>
+        <section>
+          <h3><Link to={'/signup'}>Sign Up Now!</Link></h3>
+          <p>Or log in to demo account:</p>
+          <p>Username: demo</p>
+          <p>Password: Password1!</p>
+        </section>
       </>
     )
   }
