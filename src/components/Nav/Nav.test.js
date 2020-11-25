@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import { MovingdayProvider } from '../../context/MovingdayContext';
+import Nav from './Nav';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
+    <MovingdayProvider>
+      <Nav />
+    </MovingdayProvider>,
     div
   );
   ReactDOM.unmountComponentAtNode(div);

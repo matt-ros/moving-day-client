@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import { MovingdayProvider } from '../../context/MovingdayContext';
+import BoxForm from './BoxForm';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <BrowserRouter>
-      <App />
+      <MovingdayProvider>
+        <BoxForm match={{ params: { id: 1 } }} history={{ goBack: () => {} }} />
+      </MovingdayProvider>
     </BrowserRouter>,
     div
   );
