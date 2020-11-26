@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TokenService from '../../services/token-service'
-import AuthApiService from '../../services/auth-api-service'
+import TokenService from '../../services/token-service';
+import AuthApiService from '../../services/auth-api-service';
 import MovingdayContext from '../../context/MovingdayContext';
 
 class Nav extends React.Component {
-  static contextType = MovingdayContext
+  static contextType = MovingdayContext;
 
   handleClickLogin = ev => {
     ev.preventDefault();
-    this.context.clearError()
+    this.context.clearError();
     const { user_name, password } = ev.target;
     
     AuthApiService.postLogin({
@@ -24,8 +24,8 @@ class Nav extends React.Component {
         this.props.history.push('/homepage');
       })
       .catch(res => {
-        this.context.setError(res.error)
-      })
+        this.context.setError(res.error);
+      });
   }
 
   handleClickLogout = ev => {
@@ -36,7 +36,8 @@ class Nav extends React.Component {
   }
 
   renderLoginForm() {
-    const { error } = this.context
+    const { error } = this.context;
+    
     return (
       <form className="login-form" onSubmit={this.handleClickLogin}>
         {(error)
@@ -48,13 +49,13 @@ class Nav extends React.Component {
         <input type="password" name="password" id="password" /><br />
         <button type="submit">Login</button>
       </form>
-    )
+    );
   }
 
   renderLogoutButton() {
     return (
       <button type='button' className='logout' onClick={this.handleClickLogout}>Logout</button>
-    )
+    );
   }
 
   renderLinks() {
@@ -70,14 +71,14 @@ class Nav extends React.Component {
         {' '}
         <Link to='/notes'>Notes</Link>
       </p>
-    )
+    );
   }
 
   renderEmpty() {
     return (
       <p>
       </p>
-    )
+    );
   }
 
   render() {
@@ -90,7 +91,7 @@ class Nav extends React.Component {
           ? this.renderLogoutButton()
           : this.renderLoginForm()}
       </nav>
-    )
+    );
   }
 }
 

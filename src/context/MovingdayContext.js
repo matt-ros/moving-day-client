@@ -1,6 +1,6 @@
-import React from 'react'
-import GetAllApiService from '../services/getAll-api-service'
-import TokenService from '../services/token-service'
+import React from 'react';
+import GetAllApiService from '../services/getAll-api-service';
+import TokenService from '../services/token-service';
 
 const MovingdayContext = React.createContext({
   user: {},
@@ -25,9 +25,9 @@ const MovingdayContext = React.createContext({
   deleteList: () => {},
   onLogin: () => {},
   onLogOut: () => {},
-})
+});
 
-export default MovingdayContext
+export default MovingdayContext;
 
 export class MovingdayProvider extends React.Component {
   state = {
@@ -36,137 +36,137 @@ export class MovingdayProvider extends React.Component {
     contacts: [],
     lists: [],
     error: null
-  }
+  };
 
   componentDidMount() {
     if (TokenService.hasUnexpiredAuthToken()) {
-      this.onLogin()
+      this.onLogin();
     }
   }
 
   setError = (error) => {
     console.error(error);
-    this.setState({ error })
+    this.setState({ error });
   }
 
   clearError = () => {
-    this.setState({ error: null })
+    this.setState({ error: null });
   }
 
   setUser = user => {
-    this.setState({ user })
+    this.setState({ user });
   }
 
   setBoxes = boxes => {
-    this.setState({ boxes })
+    this.setState({ boxes });
   }
 
   setContacts = contacts => {
-    this.setState({ contacts })
+    this.setState({ contacts });
   }
   
   setLists = lists => {
-    this.setState({ lists })
+    this.setState({ lists });
   }
 
   updateUser = fields => {
     const updatedUser = {
       ...this.state.user,
       ...fields
-    }
-    this.setState({ user: updatedUser })
+    };
+    this.setState({ user: updatedUser });
   }
 
   addBox = box => {
     const newBoxes = [
       ...this.state.boxes,
       box
-    ]
-    this.setBoxes(newBoxes)
+    ];
+    this.setBoxes(newBoxes);
   }
 
   updateBox = (boxId, fields) => {
-    const { boxes } = this.state
+    const { boxes } = this.state;
     // eslint-disable-next-line
-    const currentBox = this.state.boxes.find(box => box.id == boxId)
+    const currentBox = this.state.boxes.find(box => box.id == boxId);
     const updatedBox = {
       ...currentBox,
       ...fields
-    }
-    boxes.splice(boxes.findIndex(box => box.id === currentBox.id), 1, updatedBox)
-    this.setBoxes(boxes)
+    };
+    boxes.splice(boxes.findIndex(box => box.id === currentBox.id), 1, updatedBox);
+    this.setBoxes(boxes);
   }
 
   deleteBox = boxId => {
-    const boxes = this.state.boxes
-    const newBoxes = boxes.filter(box => box.id !== Number(boxId))
-    this.setBoxes(newBoxes)
+    const boxes = this.state.boxes;
+    const newBoxes = boxes.filter(box => box.id !== Number(boxId));
+    this.setBoxes(newBoxes);
   }
 
   addContact = contact => {
     const newContacts = [
       ...this.state.contacts,
       contact
-    ]
-    this.setContacts(newContacts)
+    ];
+    this.setContacts(newContacts);
   }
 
   updateContact = (contactId, fields) => {
-    const { contacts } = this.state
+    const { contacts } = this.state;
     // eslint-disable-next-line
-    const currentContact = this.state.contacts.find(contact => contact.id == contactId)
+    const currentContact = this.state.contacts.find(contact => contact.id == contactId);
     const updatedContact = {
       ...currentContact,
       ...fields
-    }
-    contacts.splice(contacts.findIndex(contact => contact.id === currentContact.id), 1, updatedContact)
-    this.setContacts(contacts)
+    };
+    contacts.splice(contacts.findIndex(contact => contact.id === currentContact.id), 1, updatedContact);
+    this.setContacts(contacts);
   }
 
   deleteContact = contactId => {
-    const contacts = this.state.contacts
-    const newContacts = contacts.filter(contact => contact.id !== Number(contactId))
-    this.setContacts(newContacts)
+    const contacts = this.state.contacts;
+    const newContacts = contacts.filter(contact => contact.id !== Number(contactId));
+    this.setContacts(newContacts);
   }
 
   addList = list => {
     const newLists = [
       ...this.state.lists,
       list
-    ]
-    this.setLists(newLists)
+    ];
+    this.setLists(newLists);
   }
 
   updateList = (listId, fields) => {
-    const { lists } = this.state
+    const { lists } = this.state;
     // eslint-disable-next-line
-    const currentList = this.state.lists.find(list => list.id == listId)
+    const currentList = this.state.lists.find(list => list.id == listId);
     const updatedList = {
       ...currentList,
       ...fields
-    }
-    lists.splice(lists.findIndex(list => list.id === currentList.id), 1, updatedList)
-    this.setLists(lists)
+    };
+    lists.splice(lists.findIndex(list => list.id === currentList.id), 1, updatedList);
+    this.setLists(lists);
   }
 
   deleteList = listId => {
-    const { lists } = this.state
-    const newLists = lists.filter(list => list.id !== Number(listId))
-    this.setLists(newLists)
+    const { lists } = this.state;
+    const newLists = lists.filter(list => list.id !== Number(listId));
+    this.setLists(newLists);
   }
 
   onLogin = () => {
     GetAllApiService.getAll()
       .then(res => {
-        const { user, boxes, contacts, lists } = res
+        const { user, boxes, contacts, lists } = res;
         this.setState({
           user,
           boxes,
           contacts,
           lists
-        })
+        });
       })
-      .catch(res => this.setError(res.error))
+      .catch(res => this.setError(res.error));
   }
 
   onLogOut = () => {
@@ -176,7 +176,7 @@ export class MovingdayProvider extends React.Component {
       contacts: [],
       lists: [],
       error: null
-    })
+    });
   }
 
   render() {
@@ -204,12 +204,12 @@ export class MovingdayProvider extends React.Component {
       deleteList: this.deleteList,
       onLogin: this.onLogin,
       onLogOut: this.onLogOut,
-    }
+    };
 
     return (
       <MovingdayContext.Provider value={value}>
         {this.props.children}
       </MovingdayContext.Provider>
-    )
+    );
   }
 }

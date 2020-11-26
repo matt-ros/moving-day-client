@@ -7,89 +7,111 @@ class ContactForm extends React.Component {
   state = {
     contact: {},
     changedFields: new Set()
-  }
+  };
 
-  static contextType = MovingdayContext
+  static contextType = MovingdayContext;
 
   componentDidMount() {
     if (this.props.match.params.contact_id) {
       // eslint-disable-next-line
-      const contact = this.context.contacts.find(contact => contact.id == this.props.match.params.contact_id)
-      this.setState({ contact, origContact: contact })
+      const contact = this.context.contacts.find(contact => contact.id == this.props.match.params.contact_id);
+      this.setState({ contact, origContact: contact });
     }
-    this.context.clearError()
+    this.context.clearError();
   }
 
   resetVals = ev => {
-    const { contact_name, contact_phone, contact_email, contact_notes } = ev.target
-    contact_name.value = ''
-    contact_phone.value = ''
-    contact_email.value = ''
-    contact_notes.value = ''
+    const { contact_name, contact_phone, contact_email, contact_notes } = ev.target;
+    contact_name.value = '';
+    contact_phone.value = '';
+    contact_email.value = '';
+    contact_notes.value = '';
   }
 
   handleSubmitContact = ev => {
-    ev.preventDefault()
-    this.context.clearError()
-    const contact = {}
+    ev.preventDefault();
+    this.context.clearError();
+    const contact = {};
     if (this.state.changedFields.size === 0) {
-      return this.context.setError('You must edit at least one field')
+      return this.context.setError('You must edit at least one field');
     }
-    const changedFields = Array.from(this.state.changedFields)
+
+    const changedFields = Array.from(this.state.changedFields);
     for (let i = 0; i < changedFields.length; i++) {
-      contact[changedFields[i]] = this.state.contact[changedFields[i]]
+      contact[changedFields[i]] = this.state.contact[changedFields[i]];
     }
+
     (this.props.match.params.contact_id)
       ? ContactsApiService.patchContact(this.props.match.params.contact_id, contact)
           .then(this.context.updateContact(this.props.match.params.contact_id, contact))
           .then(this.resetVals(ev))
           .then(this.props.history.goBack)
-          .catch(res => this.context.setError(res.error))
+          .catch(res => {
+            if (res.error === 'Unauthorized request') {
+              TokenService.clearAuthToken();
+              this.context.onLogOut();
+              this.context.setError(res.error);
+              this.props.history.push('/');
+            } else {
+              this.context.setError(res.error);
+            }
+      })
       : ContactsApiService.postContact(contact)
           .then(this.context.addContact)
           .then(this.resetVals(ev))
-          .catch(res => this.context.setError(res.error))
+          .catch(res => {
+            if (res.error === 'Unauthorized request') {
+              TokenService.clearAuthToken();
+              this.context.onLogOut();
+              this.context.setError(res.error);
+              this.props.history.push('/');
+            } else {
+              this.context.setError(res.error);
+            }
+          });
   }
 
   handleChange = ev => {
-    const changedFields = this.state.changedFields.add(ev.target.name)
-    const newInfo = {}
-    newInfo[ev.target.name] = ev.target.value
+    const changedFields = this.state.changedFields.add(ev.target.name);
+    const newInfo = {};
+    newInfo[ev.target.name] = ev.target.value;
     const newContact = {
       ...this.state.contact,
       ...newInfo
-    }
-    this.setState({ contact: newContact, changedFields })
+    };
+    this.setState({ contact: newContact, changedFields });
   }
 
   handleFocus = ev => {
-    const { origContact } = this.state
+    const { origContact } = this.state;
     if (origContact && ev.target.value === origContact[ev.target.name]) {
-      ev.target.value = ''
+      ev.target.value = '';
     }
   }
 
   handleBlur = ev => {
-    const { origContact } = this.state
+    const { origContact } = this.state;
     if (origContact && ev.target.value === '') {
-      ev.target.value = origContact[ev.target.name]
+      ev.target.value = origContact[ev.target.name];
     }
   }
 
   render() {
-    const { contact } = this.state
+    const { contact } = this.state;
     if (!contact) {
-      return <Redirect to='/contacts' />
+      return <Redirect to="/contacts" />
     }
-    const { error } = this.context
+
+    const { error } = this.context;
+
     return (
       <>
-        <section className='contacts'>
+        <section className="contacts">
           <header role="banner">
             <h1>{(this.props.match.params.contact_id) ? 'Edit Contact' : 'Create Contact'}</h1>
           </header>
           {error && <p>{error}</p>}
-          <form className='form' id='contact_form' onSubmit={this.handleSubmitContact}>
+          <form className="form" id="contact_form" onSubmit={this.handleSubmitContact}>
             <div>
               <label htmlFor="contact_name">Contact Name</label>
               <input type="text" name="contact_name" id="contact_name" placeholder="Steve" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_name : ''} required />
@@ -104,14 +126,14 @@ class ContactForm extends React.Component {
             </div>
             <div>
               <label htmlFor="contact_notes">Notes</label>
-              <input type='text' name="contact_notes" id="contact_notes" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_notes : ''} />
+              <input type="text" name="contact_notes" id="contact_notes" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_notes : ''} />
             </div>
           </form>
-          <button type="submit" form='contact_form'>Save</button>
-          <button type='button' onClick={this.props.history.goBack}>Go Back</button>
+          <button type="submit" form="contact_form">Save</button>
+          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
         </section>
       </>
-    )
+    );
   }
 }
 

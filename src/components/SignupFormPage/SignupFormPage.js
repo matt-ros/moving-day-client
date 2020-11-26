@@ -3,10 +3,10 @@ import MovingdayContext from '../../context/MovingdayContext';
 import UsersApiService from '../../services/users-api-service';
 
 class SignupFormPage extends React.Component {
-  static contextType = MovingdayContext
+  static contextType = MovingdayContext;
 
   componentDidMount() {
-    this.context.clearError()
+    this.context.clearError();
   }
 
   handleSignup = (ev) => {
@@ -17,7 +17,7 @@ class SignupFormPage extends React.Component {
       user_name: user_name.value,
       password: password.value,
       moving_date: (moving_date.value) ? moving_date.value : null
-    }
+    };
     UsersApiService.postUser(user)
       .then(this.context.setUser)
       .then(() => {
@@ -27,19 +27,20 @@ class SignupFormPage extends React.Component {
         moving_date.value = '';
         this.props.history.push('/homepage');
       })
-      .catch(res => this.context.setError(res.error))
+      .catch(res => this.context.setError(res.error));
   }
 
   render() {
-    const { error } = this.context
+    const { error } = this.context;
+    
     return (
       <>
-      <header className='title' role="banner">
+      <header className="title" role="banner">
         <h1>Sign Up!</h1>
       </header>
-      <section className='signup form'>
+      <section className="signup form">
         {error && <p>{error}</p>}
-        <form id='signup_form' onSubmit={this.handleSignup}>
+        <form id="signup_form" onSubmit={this.handleSignup}>
           <div>
             <label htmlFor="full_name">Full Name</label>
             <input type="text" name="full_name" id="full_name" required />
@@ -60,7 +61,7 @@ class SignupFormPage extends React.Component {
         </form> 
       </section>
       </>
-    )
+    );
   }
 }
 

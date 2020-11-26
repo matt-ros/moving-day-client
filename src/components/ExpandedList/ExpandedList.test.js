@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { MovingdayProvider } from '../../context/MovingdayContext'
+import { MovingdayProvider } from '../../context/MovingdayContext';
 import ExpandedList from './ExpandedList';
 
 it('renders without crashing', () => {

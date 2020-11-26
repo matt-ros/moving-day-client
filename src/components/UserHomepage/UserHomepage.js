@@ -4,13 +4,14 @@ import MovingdayContext from '../../context/MovingdayContext';
 import Countdown from '../Countdown/Countdown';
 
 class UserHomepage extends React.Component {
-  static contextType = MovingdayContext
+  static contextType = MovingdayContext;
+
   render() {
     return (
       <>
         <Countdown />
 
-        <div className='links'>
+        <div className="links">
           <Link to={'/lists'}>
             <section>
               <h3>
@@ -44,7 +45,7 @@ class UserHomepage extends React.Component {
           </Link>
         </div>
       </>
-    )
+    );
   }
 }
 

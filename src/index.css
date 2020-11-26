@@ -7,8 +7,8 @@
 
 html {
   background: linear-gradient(
-    rgba(74,13,103,0.5),
-    rgba(74,13,103,0.5)
+    rgba(74, 13, 103, 0.5),
+    rgba(74, 13, 103, 0.5)
   ),
   url(./assets/images/bgimage.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -18,8 +18,7 @@ html {
 }
 
 body {
-  font-family: 'Raleway',
-  sans-serif; 
+  font-family: 'Raleway', sans-serif; 
   font-size: 20px;
   color: #aaa;
   text-align: center;
@@ -30,7 +29,7 @@ nav,
 footer {
   font-family: 'Comfortaa', cursive;
   padding: 1% 0;
-  background-color: rgba(57,10,125,0.6);
+  background-color: rgba(57, 10, 125, 0.6);
   border: 1px solid #bbb;
   border-radius: 10px;
 }
@@ -38,7 +37,7 @@ footer {
 section {
   min-height: 200px;
   padding: 6% 0;
-  background-color: rgba(57,10,125,0.6);
+  background-color: rgba(57, 10, 125, 0.6);
   border: 1px solid #bbb;
   border-radius: 10px;
   margin: 10px 3px;
@@ -113,7 +112,7 @@ button {
   max-width: 90%;
   margin: 10px auto;
   padding: 0 10px 20px 10px;
-  background-color: rgba(74,13,103,0.6);
+  background-color: rgba(74, 13, 103, 0.6);
 }
 
 .note {
@@ -128,13 +127,12 @@ button {
 .exp ul {
   list-style-position: inside;
   padding-left: 0;
-  /* text-align: left; */
   width: 100%;
 }
 
 button {
   font-family: 'Raleway', sans-serif;
-  background-color: rgba(150,13,103,0.8);
+  background-color: rgba(150, 13, 103, 0.8);
   color: #aaa;
   padding: 4px 9px;
   border-radius: 5px;
@@ -250,7 +248,7 @@ input[type=radio] {
   }
 
   .login-form input {
-    margin: auto 10px auto 4px
+    margin: auto 10px auto 4px;
   }
 
   .links section {

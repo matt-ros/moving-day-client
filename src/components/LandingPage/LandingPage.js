@@ -5,7 +5,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <>
-        <header className='title' role="banner">
+        <header className="title" role="banner">
           <h1>Moving Day</h1>
           <h2>Move Better</h2>
         </header>
@@ -35,7 +35,7 @@ class LandingPage extends React.Component {
           <p>Password: Password1!</p>
         </section>
       </>
-    )
+    );
   }
 }
 

@@ -1,5 +1,5 @@
-import TokenService from './token-service'
-import config from '../config'
+import TokenService from './token-service';
+import config from '../config';
 
 const UsersApiService = {
   postUser(user) {
@@ -14,7 +14,7 @@ const UsersApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   patchUser(updateFields) {
@@ -30,7 +30,7 @@ const UsersApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.ok
-      )
+      );
   },
 
   getUser() {
@@ -43,8 +43,8 @@ const UsersApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   }
 }
 
-export default UsersApiService
+export default UsersApiService;

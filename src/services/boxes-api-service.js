@@ -1,5 +1,5 @@
-import TokenService from './token-service'
-import config from '../config'
+import TokenService from './token-service';
+import config from '../config';
 
 const BoxesApiService = {
   getBoxes() {
@@ -12,7 +12,7 @@ const BoxesApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   postBox(box) {
@@ -28,7 +28,7 @@ const BoxesApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   getBox(boxId) {
@@ -41,7 +41,7 @@ const BoxesApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   patchBox(boxId, updateFields) {
@@ -53,11 +53,11 @@ const BoxesApiService = {
       },
       body: JSON.stringify(updateFields)
     })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.ok
-    )
+      .then(res =>
+        (!res.ok)
+          ? res.json().then(e => Promise.reject(e))
+          : res.ok
+      );
   },
 
   deleteBox(boxId) {
@@ -71,8 +71,8 @@ const BoxesApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.ok
-      )
+      );
   }
 }
 
-export default BoxesApiService
+export default BoxesApiService;

@@ -1,5 +1,5 @@
-import TokenService from './token-service'
-import config from '../config'
+import TokenService from './token-service';
+import config from '../config';
 
 const GetAllApiService = {
   getAll() {
@@ -12,8 +12,8 @@ const GetAllApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   }
 }
 
-export default GetAllApiService
+export default GetAllApiService;

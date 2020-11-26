@@ -1,5 +1,5 @@
-import TokenService from './token-service'
-import config from '../config'
+import TokenService from './token-service';
+import config from '../config';
 
 const ContactsApiService = {
   getContacts() {
@@ -12,7 +12,7 @@ const ContactsApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   postContact(contact) {
@@ -28,7 +28,7 @@ const ContactsApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   getContact(contactId) {
@@ -41,7 +41,7 @@ const ContactsApiService = {
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
-      )
+      );
   },
 
   patchContact(contactId, updateFields) {
@@ -53,11 +53,11 @@ const ContactsApiService = {
       },
       body: JSON.stringify(updateFields)
     })
-    .then(res =>
-      (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.ok
-    )
+      .then(res =>
+        (!res.ok)
+          ? res.json().then(e => Promise.reject(e))
+          : res.ok
+      );
   },
 
   deleteContact(contactId) {
@@ -71,8 +71,8 @@ const ContactsApiService = {
       (!res.ok)
         ? res.json().then(e => Promise.reject(e))
         : res.ok
-    )
+    );
   }
 }
 
-export default ContactsApiService
+export default ContactsApiService;
