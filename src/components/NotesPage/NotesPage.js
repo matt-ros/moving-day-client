@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
+import TokenService from '../../services/token-service';
 import UsersApiService from '../../services/users-api-service';
 
 class NotesPage extends React.Component {

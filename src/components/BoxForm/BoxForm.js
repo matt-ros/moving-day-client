@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import BoxesApiService from '../../services/boxes-api-service';
 import MovingdayContext from '../../context/MovingdayContext';
+import TokenService from '../../services/token-service';
 
 class BoxForm extends React.Component {
   state = {

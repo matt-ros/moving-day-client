@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import ListsApiService from '../../services/lists-api-service';
+import TokenService from '../../services/token-service';
 
 class ExpandedList extends React.Component {
   static contextType = MovingdayContext;

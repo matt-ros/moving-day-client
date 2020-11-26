@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import ContactsApiService from '../../services/contacts-api-service';
+import TokenService from '../../services/token-service';
 
 class Contact extends React.Component {
   static contextType = MovingdayContext;

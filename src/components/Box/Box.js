@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MovingdayContext from '../../context/MovingdayContext';
 import BoxesApiService from '../../services/boxes-api-service';
+import TokenService from '../../services/token-service';
 
 class Box extends React.Component {
   static contextType = MovingdayContext;
