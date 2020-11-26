@@ -12,19 +12,19 @@ class LandingPage extends React.Component {
 
         <section>
           <h3>Keep track of your stuff</h3>
-          <p>[<em>Screenshot of Boxes section</em>]</p>
-          <p>Stay organized during your move with inventories for each box you pack, as well as additional notes like transport location and destination</p>
+          <br />
+          <p>Stay organized during your move with inventories for each box you pack</p>
         </section>
 
         <section>
           <h3>Remember what you need to do</h3>
-          <p>[<em>Screenshot of Lists section</em>]</p>
+          <br />
           <p>Never forget what you were supposed to be doing with to-do lists for the whole family</p>
         </section>
 
         <section>
           <h3>Organize your contacts</h3>
-          <p>[<em>Screenshot of Contacts section</em>]</p>
+          <br />
           <p>Record all your move-related contacts so everything is in one place</p>
         </section>
 
