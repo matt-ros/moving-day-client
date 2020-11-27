@@ -24,11 +24,20 @@ class BoxesPage extends React.Component {
   }
 
   render() {
-    const boxes = (this.state.filter)
-      ? this.context.boxes.filter(box => (
+    let boxes = []
+    if (this.state.filter && this.state.filter_type !== 'inventory') {
+      boxes = this.context.boxes.filter(box => (
         box[this.state.filter_type] && box[this.state.filter_type].toLowerCase().includes(this.state.filter.toLowerCase())
-        ))
-      : this.context.boxes;
+        ));
+    } else if (this.state.filter && this.state.filter_type === 'inventory') {
+      this.context.boxes.forEach(box => {
+        if (box.inventory.join(';').toLowerCase().includes(this.state.filter.toLowerCase())) {
+          boxes.push(box);
+        }
+      });
+    } else {
+      boxes = this.context.boxes;
+    }
 
     const { error } = this.context;
     
@@ -71,6 +80,11 @@ class BoxesPage extends React.Component {
         <div className="unit">
           <input type="radio" name="filter_type" id="box_notes" value="box_notes" checked={this.state.filter_type === 'box_notes'} onChange={this.handleChangeType} />
           <label htmlFor="box_notes">Notes</label>
+        </div>
+        {' '}
+        <div className="unit">
+          <input type="radio" name="filter_type" id="inventory" value="inventory" checked={this.state.filter_type === 'inventory'} onChange={this.handleChangeType} />
+          <label htmlFor="inventory">Inventory</label>
         </div>
         <ul className="boxes-list">
           {boxes.map(box =>
