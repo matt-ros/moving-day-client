@@ -25,8 +25,7 @@ body {
   line-height: 1.5;
 }
 
-nav,
-footer {
+nav {
   font-family: 'Comfortaa', cursive;
   padding: 1% 0;
   background-color: rgba(57, 10, 125, 0.6);
@@ -49,6 +48,18 @@ section:nth-child(even) {
 
 .title {
   color: #dedede;
+}
+
+.list_form_page ul, .box_form_page ul, .exp ul {
+  list-style-position: inside;
+  max-width: max-content;
+  margin: 20px auto;
+  text-align: left;
+  padding-left: 5px;
+}
+
+.exp ul {
+  width: 100%;
 }
 
 .page ul {
@@ -96,10 +107,6 @@ a:hover, a:active {
   color: #ddd;
 }
 
-button {
-  margin: auto 4px;
-}
-
 .logout {
   width: 75px;
   height: 30px;
@@ -124,22 +131,21 @@ button {
   max-width: 95%;
 }
 
-.exp ul {
-  list-style-position: inside;
-  padding-left: 0;
-  width: 100%;
-}
-
 button {
   font-family: 'Raleway', sans-serif;
-  background-color: rgba(150, 13, 103, 0.8);
-  color: #aaa;
+  background-color: slategray;
+  color: black;
+  margin: auto 4px;
   padding: 4px 9px;
   border-radius: 5px;
 }
 
+li button {
+  margin: auto 4px auto 8px;
+}
+
 .buttons {
-  display: inline-flex;
+  display: inline-block;
 }
 
 h1, h2, h3 {
@@ -148,6 +154,7 @@ h1, h2, h3 {
 
 .countdown h3 {
   margin: 20px auto;
+  font-size: 20px;
 }
 
 .error {
@@ -155,8 +162,9 @@ h1, h2, h3 {
   font-weight: bold;
 }
 
-input[type=text], input[type=tel], input[type=email] {
+input[type=text], input[type=tel], input[type=email], input[type=password], input[type=date], textarea {
   margin: auto 10px auto 4px;
+  border-radius: 5px;
 }
 
 input[type=radio] {
@@ -215,6 +223,10 @@ input[type=radio] {
     font-size: 30px;
   }
 
+  .countdown h3 {
+    font-size: 25px;
+  }
+
   #box_item_form {
     width: 100%;
     justify-content: space-between;
@@ -262,5 +274,9 @@ input[type=radio] {
 
   .note, .box, .contact, .list {
     width: 50vw;
+  }
+
+  .countdown h3 {
+    font-size: 30px;
   }
 }

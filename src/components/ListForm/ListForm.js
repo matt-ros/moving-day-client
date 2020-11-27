@@ -133,8 +133,10 @@ class ListForm extends React.Component {
       ? Object.entries(list.list_items).map(([key, value], index) =>
           <li key={index} className={value ? 'checked' : ''}>
             {key}
-            <button type="button" onClick={e => this.handleClickChecked(key)}>{value ? 'Uncheck' : 'Check'}</button>
-            <button type="button" onClick={e => this.handleDeleteItem(key)}>Delete</button>
+            <div className="buttons">
+              <button type="button" onClick={e => this.handleClickChecked(key)}>{value ? 'Uncheck' : 'Check'}</button>
+              <button type="button" onClick={e => this.handleDeleteItem(key)}>Delete</button>
+            </div>
           </li>
         )
       : null;
@@ -143,7 +145,7 @@ class ListForm extends React.Component {
 
     return (
       <>
-        <section className="lists">
+        <section className="list_form_page">
           <header role="banner">
             <h1>{(this.props.match.params.list_id) ? 'Edit List' : 'Create List'}</h1>
           </header>
@@ -152,17 +154,16 @@ class ListForm extends React.Component {
             <form className="form" id="list_form" onSubmit={this.handleSubmitList}>
               <div>
                 <label htmlFor="list_name">List Name</label>
-                <input type="text" name="list_name" id="list_name" placeholder="Steve's List" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
+                <input type="text" name="list_name" id="list_name" placeholder="Steve's List" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
               </div>
             </form> 
             <div>
               <form className="form" onSubmit={this.handleSubmitItem}>
                 <label htmlFor="list_item">List Item</label>
-                <input type="text" name="list_item" id="list_item" placeholder="Buy tape" />
+                <input type="text" name="list_item" id="list_item" placeholder="Buy tape" autoComplete="on" />
                 <button type="submit">Add Item</button>
               </form>
             </div>
-
           </div>
           <button type="submit" form="list_form">Save</button>
           <h2>List Items</h2>

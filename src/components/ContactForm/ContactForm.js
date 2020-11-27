@@ -115,19 +115,19 @@ class ContactForm extends React.Component {
           <form className="form" id="contact_form" onSubmit={this.handleSubmitContact}>
             <div>
               <label htmlFor="contact_name">Contact Name</label>
-              <input type="text" name="contact_name" id="contact_name" placeholder="Steve" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_name : ''} required />
+              <input type="text" name="contact_name" id="contact_name" placeholder="Steve" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_name : ''} required />
             </div>
             <div>
               <label htmlFor="contact_phone">Phone Number</label>
-              <input type="tel" name="contact_phone" id="contact_phone" placeholder="123-456-7890" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_phone : ''} />
+              <input type="tel" name="contact_phone" id="contact_phone" placeholder="123-456-7890" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_phone : ''} />
             </div>
             <div>
               <label htmlFor="contact_email">Email Address</label>
-              <input type="email" name="contact_email" id="contact_email" placeholder="steve@gmail.com" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_email : ''} />
+              <input type="email" name="contact_email" id="contact_email" placeholder="steve@gmail.com" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_email : ''} />
             </div>
             <div>
               <label htmlFor="contact_notes">Notes</label>
-              <input type="text" name="contact_notes" id="contact_notes" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_notes : ''} />
+              <input type="text" name="contact_notes" id="contact_notes" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_notes : ''} />
             </div>
           </form>
           <button type="submit" form="contact_form">Save</button>

@@ -172,7 +172,7 @@ class BoxForm extends React.Component {
 
     return (
       <>
-        <section className="boxes">
+        <section className="box_form_page">
           <header role="banner">
             <h1>{(this.props.match.params.box_id) ? 'Edit Box' : 'Create Box'}</h1>
           </header>
@@ -189,26 +189,26 @@ class BoxForm extends React.Component {
             </div>
             <div>
               <label htmlFor="going_to">Where's It Going To?</label>
-              <input type="text" name="going_to" id="going_to" placeholder="Storage Unit" list="rooms" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.going_to : ''} />
+              <input type="text" name="going_to" id="going_to" placeholder="Storage Unit" list="rooms" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.going_to : ''} />
             </div>
             <div>
               <label htmlFor="getting_there">How's It Getting There?</label>
-              <input type="text" name="getting_there" id="getting_there" placeholder="Moving Truck" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.getting_there : ''} />
+              <input type="text" name="getting_there" id="getting_there" placeholder="Moving Truck" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.getting_there : ''} />
             </div>
             <div>
               <label htmlFor="color_code">Color Code</label>
-              <input type="text" name="color_code" id="color_code" placeholder="Red" list="colors" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.color_code : ''} />
+              <input type="text" name="color_code" id="color_code" placeholder="Red" list="colors" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.color_code : ''} />
               {this.createColorList()}
             </div>
             <div>
               <label htmlFor="box_notes">Notes</label>
-              <input type="text" name="box_notes" id="box_notes" placeholder="Fragile" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_notes : ''} />
+              <input type="text" name="box_notes" id="box_notes" placeholder="Fragile" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_notes : ''} />
             </div>
           </form>
           <div>
             <form className="form" id="box_item_form" onSubmit={this.handleSubmitItem}>
               <label htmlFor="box_item">Inventory Item</label>
-              <input type="text" name="box_item" id="box_item" placeholder="Plates" />
+              <input type="text" name="box_item" id="box_item" placeholder="Plates" autoComplete="on" />
               <button type="submit">Add Item</button>
             </form>
           </div>
