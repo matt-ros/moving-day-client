@@ -63,13 +63,26 @@ class ExpandedList extends React.Component {
         }
       });
   }
+  
+  findNextId = (index) => {
+    const nextIndex = (index === this.context.lists.length - 1) ? 0 : index + 1;
+    return this.context.lists[nextIndex].id;
+  }
+
+  findPrevId = (index) => {
+    const prevIndex = (index === 0) ? this.context.lists.length - 1 : index - 1;
+    return this.context.lists[prevIndex].id;
+  }
+
 
   render() {
     // eslint-disable-next-line
-    const list = this.context.lists.find(list => list.id == this.props.match.params.list_id);
-    if (!list) {
+    const listIndex = this.context.lists.findIndex(list => list.id == this.props.match.params.list_id);
+    if (listIndex === -1) {
       return <Redirect to="/lists" />
     }
+
+    const list = this.context.lists[listIndex];
     
     const items = (list.list_items)
       ? Object.entries(list.list_items).map(([key, value], index) =>
@@ -96,7 +109,10 @@ class ExpandedList extends React.Component {
           {items.length > 0 ? <ul>{items}</ul> : <p>None</p>}
           <button type="button" onClick={e => this.props.history.push(`/listform/${list.id}`)}>Edit</button>
           <button type="button" onClick={this.handleDeleteList}>Delete</button>
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <br />
+          <button type="button" onClick={e => this.props.history.push(`/lists/${this.findPrevId(listIndex)}`)}>Previous</button>
+          <button type="button" onClick={e => this.props.history.push('/lists')}>Go Back</button>
+          <button type="button" onClick={e => this.props.history.push(`/lists/${this.findNextId(listIndex)}`)}>Next</button>
         </div>
       </section>
     );

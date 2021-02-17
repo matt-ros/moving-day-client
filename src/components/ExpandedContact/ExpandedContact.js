@@ -27,14 +27,25 @@ class ExpandedContact extends React.Component {
         }
       });
   }
+  
+  findNextId = (index) => {
+    const nextIndex = (index === this.context.contacts.length - 1) ? 0 : index + 1;
+    return this.context.contacts[nextIndex].id;
+  }
+
+  findPrevId = (index) => {
+    const prevIndex = (index === 0) ? this.context.contacts.length - 1 : index - 1;
+    return this.context.contacts[prevIndex].id;
+  }
 
   render() {
     // eslint-disable-next-line
-    const contact = this.context.contacts.find(contact => contact.id == this.props.match.params.contact_id);
-    if (!contact) {
+    const contactIndex = this.context.contacts.findIndex(contact => contact.id == this.props.match.params.contact_id);
+    if (contactIndex === -1) {
       return <Redirect to="/contacts" />
     }
 
+    const contact = this.context.contacts[contactIndex];
     const { error } = this.context;
 
     return (
@@ -49,7 +60,10 @@ class ExpandedContact extends React.Component {
           {contact.contact_notes && <p><strong>Notes: </strong>{contact.contact_notes}</p>}
           <button type="button" onClick={e => this.props.history.push(`/contactform/${contact.id}`)}>Edit</button>
           <button type="button" onClick={this.handleDelete}>Delete</button>
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <br />
+          <button type="button" onClick={e => this.props.history.push(`/contacts/${this.findPrevId(contactIndex)}`)}>Previous</button>
+          <button type="button" onClick={e => this.props.history.push('/contacts')}>Go Back</button>
+          <button type="button" onClick={e => this.props.history.push(`/contacts/${this.findNextId(contactIndex)}`)}>Next</button>
         </div>
       </section>
     );

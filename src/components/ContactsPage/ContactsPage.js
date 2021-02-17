@@ -62,12 +62,15 @@ class ContactsPage extends React.Component {
           <input type="radio" name="filter_type" id="contact_notes" value="contact_notes" checked={this.state.filter_type === 'contact_notes'} onChange={this.handleChangeType} />
           <label htmlFor="contact_notes">Notes</label>
         </div>
+        <div>
+          <br />
+          <button type="button" onClick={e => this.props.history.push('/contactform')}>New Contact</button>
+        </div>
         <ul className="contacts-list">
           {contacts.map(contact =>
             <Contact key={contact.id} contact={contact} history={this.props.history} />
           )}
         </ul>
-        <button type="button" onClick={e => this.props.history.push('/contactform')}>New Contact</button>
       </section>
     );
   }

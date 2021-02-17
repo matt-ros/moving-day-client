@@ -62,6 +62,7 @@ class BoxForm extends React.Component {
           })
       : BoxesApiService.postBox(box)
           .then(this.context.addBox)
+          .then(this.setState({ submitted: true }))
           .then(this.resetVals(ev))
           .catch(res => {
             if (res.error === 'Unauthorized request') {
@@ -85,7 +86,7 @@ class BoxForm extends React.Component {
       ...this.state.box,
       inventory: newInventory
     };
-    this.setState({ box: newBox, changedFields });
+    this.setState({ box: newBox, submitted: false, changedFields });
     box_item.value = '';
   }
 
@@ -104,7 +105,7 @@ class BoxForm extends React.Component {
       ...this.state.box,
       ...newInfo
     };
-    this.setState({ box: newBox, changedFields });
+    this.setState({ box: newBox, submitted: false, changedFields });
   }
 
   handleFocus = ev => {
@@ -169,53 +170,56 @@ class BoxForm extends React.Component {
       : null;
 
     const { error } = this.context;
+    const { submitted } = this.state;
+    const editBoolean = !!this.props.match.params.box_id;
 
     return (
       <>
         <section className="box_form_page">
           <header role="banner">
-            <h1>{(this.props.match.params.box_id) ? 'Edit Box' : 'Create Box'}</h1>
+            <h1>{(editBoolean) ? 'Edit Box' : 'Create Box'}</h1>
           </header>
           {error && <p className="error">{error}</p>}
+          {submitted && <p>Submitted!</p>}
           <form className="form" id="box_form" onSubmit={this.handleSubmitBox}>
             <div>
               <label htmlFor="box_name">Box Name</label>
-              <input type="text" name="box_name" id="box_name" placeholder="Kitchen Box 1" list="names" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_name : ''} required />
+              <input type="text" name="box_name" id="box_name" placeholder={!editBoolean && "Kitchen Box 1"} list="names" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_name : ''} required />
             </div>
             <div>
               <label htmlFor="coming_from">Where's It Coming From?</label>
-              <input type="text" name="coming_from" id="coming_from" placeholder="Kitchen" list="rooms" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.coming_from : ''} />
+              <input type="text" name="coming_from" id="coming_from" placeholder={!editBoolean && "Kitchen"} list="rooms" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.coming_from : ''} />
               {this.createRoomList()}
             </div>
             <div>
               <label htmlFor="going_to">Where's It Going To?</label>
-              <input type="text" name="going_to" id="going_to" placeholder="Storage Unit" list="rooms" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.going_to : ''} />
+              <input type="text" name="going_to" id="going_to" placeholder={!editBoolean && "Storage Unit"} list="rooms" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.going_to : ''} />
             </div>
             <div>
               <label htmlFor="getting_there">How's It Getting There?</label>
-              <input type="text" name="getting_there" id="getting_there" placeholder="Moving Truck" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.getting_there : ''} />
+              <input type="text" name="getting_there" id="getting_there" placeholder={!editBoolean && "Moving Truck"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.getting_there : ''} />
             </div>
             <div>
               <label htmlFor="color_code">Color Code</label>
-              <input type="text" name="color_code" id="color_code" placeholder="Red" list="colors" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.color_code : ''} />
+              <input type="text" name="color_code" id="color_code" placeholder={!editBoolean && "Red"} list="colors" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.color_code : ''} />
               {this.createColorList()}
             </div>
             <div>
               <label htmlFor="box_notes">Notes</label>
-              <input type="text" name="box_notes" id="box_notes" placeholder="Fragile" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_notes : ''} />
+              <input type="text" name="box_notes" id="box_notes" placeholder={!editBoolean && "Fragile"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(box).length) ? this.state.box.box_notes : ''} />
             </div>
           </form>
           <div>
             <form className="form" id="box_item_form" onSubmit={this.handleSubmitItem}>
               <label htmlFor="box_item">Inventory Item</label>
-              <input type="text" name="box_item" id="box_item" placeholder="Plates" autoComplete="on" />
+              <input type="text" name="box_item" id="box_item" placeholder={!editBoolean && "Plates"} autoComplete="on" />
               <button type="submit">Add Item</button>
             </form>
           </div>
           <button type="submit" form="box_form">Save</button>
           <h2>Inventory</h2>
           {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <button type="button" onClick={this.props.history.goBack}>Cancel</button>
         </section>
       </>
     );

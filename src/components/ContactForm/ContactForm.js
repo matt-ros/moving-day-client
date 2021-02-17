@@ -59,6 +59,7 @@ class ContactForm extends React.Component {
       })
       : ContactsApiService.postContact(contact)
           .then(this.context.addContact)
+          .then(this.setState({ submitted: true }))
           .then(this.resetVals(ev))
           .catch(res => {
             if (res.error === 'Unauthorized request') {
@@ -80,7 +81,7 @@ class ContactForm extends React.Component {
       ...this.state.contact,
       ...newInfo
     };
-    this.setState({ contact: newContact, changedFields });
+    this.setState({ contact: newContact, submitted: false, changedFields });
   }
 
   handleFocus = ev => {
@@ -104,26 +105,29 @@ class ContactForm extends React.Component {
     }
 
     const { error } = this.context;
+    const { submitted } = this.state;
+    const editBoolean = !!this.props.match.params.contact_id;
 
     return (
       <>
         <section className="contacts">
           <header role="banner">
-            <h1>{(this.props.match.params.contact_id) ? 'Edit Contact' : 'Create Contact'}</h1>
+            <h1>{(editBoolean) ? 'Edit Contact' : 'Create Contact'}</h1>
           </header>
           {error && <p>{error}</p>}
+          {submitted && <p>Submitted!</p>}
           <form className="form" id="contact_form" onSubmit={this.handleSubmitContact}>
             <div>
               <label htmlFor="contact_name">Contact Name</label>
-              <input type="text" name="contact_name" id="contact_name" placeholder="Steve" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_name : ''} required />
+              <input type="text" name="contact_name" id="contact_name" placeholder={!editBoolean && "Steve"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_name : ''} required />
             </div>
             <div>
               <label htmlFor="contact_phone">Phone Number</label>
-              <input type="tel" name="contact_phone" id="contact_phone" placeholder="123-456-7890" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_phone : ''} />
+              <input type="tel" name="contact_phone" id="contact_phone" placeholder={!editBoolean && "123-456-7890"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_phone : ''} />
             </div>
             <div>
               <label htmlFor="contact_email">Email Address</label>
-              <input type="email" name="contact_email" id="contact_email" placeholder="steve@gmail.com" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_email : ''} />
+              <input type="email" name="contact_email" id="contact_email" placeholder={!editBoolean && "steve@gmail.com"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(contact).length) ? this.state.contact.contact_email : ''} />
             </div>
             <div>
               <label htmlFor="contact_notes">Notes</label>
@@ -131,7 +135,7 @@ class ContactForm extends React.Component {
             </div>
           </form>
           <button type="submit" form="contact_form">Save</button>
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <button type="button" onClick={this.props.history.goBack}>Cancel</button>
         </section>
       </>
     );

@@ -46,12 +46,24 @@ class ExpandedBox extends React.Component {
       });
   }
 
+  findNextId = (index) => {
+    const nextIndex = (index === this.context.boxes.length - 1) ? 0 : index + 1;
+    return this.context.boxes[nextIndex].id;
+  }
+
+  findPrevId = (index) => {
+    const prevIndex = (index === 0) ? this.context.boxes.length - 1 : index - 1;
+    return this.context.boxes[prevIndex].id;
+  }
+
   render() {
     // eslint-disable-next-line
-    const box = this.context.boxes.find(box => box.id == this.props.match.params.box_id);
-    if (!box) {
+    const boxIndex = this.context.boxes.findIndex(box => box.id == this.props.match.params.box_id);
+    if (boxIndex === -1) {
       return <Redirect to="/boxes" />
     }
+
+    const box = this.context.boxes[boxIndex];
 
     const inventory = (box.inventory.length > 0)
       ? box.inventory.map((item, index) => <li key={index}>{item}<button type="button" onClick={e => this.handleDeleteItem(index)}>Delete Item</button></li>)
@@ -75,7 +87,10 @@ class ExpandedBox extends React.Component {
           {(inventory) ? <ul>{inventory}</ul> : <p>Empty</p>}
           <button type="button" onClick={e => this.props.history.push(`/boxform/${box.id}`)}>Edit</button>
           <button type="button" onClick={this.handleDeleteBox}>Delete</button>
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <br />
+          <button type="button" onClick={e => this.props.history.push(`/boxes/${this.findPrevId(boxIndex)}`)}>Previous</button>
+          <button type="button" onClick={e => this.props.history.push('/boxes')}>Go Back</button>
+          <button type="button" onClick={e => this.props.history.push(`/boxes/${this.findNextId(boxIndex)}`)}>Next</button>
         </div>
       </section>
     );

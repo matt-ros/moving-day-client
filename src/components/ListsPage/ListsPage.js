@@ -19,12 +19,12 @@ class ListsPage extends React.Component {
           To-Do Lists
         </h2>
         {error && <p>{error}</p>}
+        <button type="button" onClick={e => this.props.history.push('/listform')}>New List</button>
         <ul className="lists-list">
           {this.context.lists.map(list =>
             <List key={list.id} list={list} history={this.props.history} />
           )}
         </ul>
-        <button type="button" onClick={e => this.props.history.push('/listform')}>New List</button>
       </section>
     );
   }

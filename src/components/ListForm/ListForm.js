@@ -57,6 +57,7 @@ class ListForm extends React.Component {
           })
       : ListsApiService.postList(list)
           .then(this.context.addList)
+          .then(this.setState({ submitted: true }))
           .then(this.resetVals(ev))
           .catch(res => {
             if (res.error === 'Unauthorized request') {
@@ -92,21 +93,21 @@ class ListForm extends React.Component {
       ...this.state.list,
       ...newInfo
     };
-    this.setState({ list: newList, changedFields });
+    this.setState({ list: newList, submitted: false, changedFields });
   }
 
   handleDeleteItem = item => {
     const { list } = this.state;
     delete list.list_items[item];
     const changedFields = this.state.changedFields.add('list_items');
-    this.setState({ list, changedFields });
+    this.setState({ list, changedFields, submitted: false });
   }
 
   handleClickChecked = item => {
     const { list } = this.state;
     list.list_items[item] = !list.list_items[item];
     const changedFields = this.state.changedFields.add('list_items');
-    this.setState({ list, changedFields });
+    this.setState({ list, changedFields, submitted: false });
   }
   
   handleFocus = ev => {
@@ -142,25 +143,28 @@ class ListForm extends React.Component {
       : null;
 
     const { error } = this.context;
+    const { submitted } = this.state;
+    const editBoolean = !!this.props.match.params.list_id;
 
     return (
       <>
         <section className="list_form_page">
           <header role="banner">
-            <h1>{(this.props.match.params.list_id) ? 'Edit List' : 'Create List'}</h1>
+            <h1>{(editBoolean) ? 'Edit List' : 'Create List'}</h1>
           </header>
         {error && <p>{error}</p>}
+        {submitted && <p>Submitted!</p>}
           <div className="list_form_container">
             <form className="form" id="list_form" onSubmit={this.handleSubmitList}>
               <div>
                 <label htmlFor="list_name">List Name</label>
-                <input type="text" name="list_name" id="list_name" placeholder="Steve's List" autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
+                <input type="text" name="list_name" id="list_name" placeholder={!editBoolean && "Steve's List"} autoComplete="on" onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange} defaultValue={(Object.entries(list).length) ? this.state.list.list_name : ''} required />
               </div>
             </form> 
             <div>
               <form className="form" onSubmit={this.handleSubmitItem}>
                 <label htmlFor="list_item">List Item</label>
-                <input type="text" name="list_item" id="list_item" placeholder="Buy tape" autoComplete="on" />
+                <input type="text" name="list_item" id="list_item" placeholder={!editBoolean && "Buy tape"} autoComplete="on" />
                 <button type="submit">Add Item</button>
               </form>
             </div>
@@ -168,7 +172,7 @@ class ListForm extends React.Component {
           <button type="submit" form="list_form">Save</button>
           <h2>List Items</h2>
           {items ? <ul>{items}</ul> : <p>None</p>}
-          <button type="button" onClick={this.props.history.goBack}>Go Back</button>
+          <button type="button" onClick={this.props.history.goBack}>Cancel</button>
         </section>
       </>
     );

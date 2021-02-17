@@ -86,12 +86,15 @@ class BoxesPage extends React.Component {
           <input type="radio" name="filter_type" id="inventory" value="inventory" checked={this.state.filter_type === 'inventory'} onChange={this.handleChangeType} />
           <label htmlFor="inventory">Inventory</label>
         </div>
+        <div>
+          <br />
+          <button type="button" onClick={e => this.props.history.push('/boxform')}>New Box</button>
+        </div>
         <ul className="boxes-list">
           {boxes.map(box =>
             <Box key={box.id} box={box} history={this.props.history} />
           )}
         </ul>
-        <button type="button" onClick={e => this.props.history.push('/boxform')}>New Box</button>
       </section>
     );
   }
